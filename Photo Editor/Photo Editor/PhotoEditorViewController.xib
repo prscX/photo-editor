@@ -172,7 +172,7 @@
                     <rect key="frame" x="0.0" y="752" width="375" height="60"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="ZRl-89-gRO">
-                            <rect key="frame" x="12" y="0.0" width="137" height="52"/>
+                            <rect key="frame" x="12" y="0.0" width="131" height="52"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mW4-Jz-sic">
                                     <rect key="frame" x="0.0" y="7.6666666666666288" width="30" height="37"/>
@@ -199,8 +199,8 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kpe-Ez-Cio">
-                                    <rect key="frame" x="90" y="11" width="47" height="30"/>
-                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                    <rect key="frame" x="90" y="12" width="41" height="28"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <size key="titleShadowOffset" width="1" height="0.0"/>
                                     <state key="normal" title="Сброс">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -212,11 +212,25 @@
                                 </button>
                             </subviews>
                         </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNH-TU-KxG">
+                            <rect key="frame" x="307" y="-8" width="50" height="62"/>
+                            <fontDescription key="fontDescription" name="icomoon" family="icomoon" pointSize="50"/>
+                            <size key="titleShadowOffset" width="1" height="0.0"/>
+                            <state key="normal" title="">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.1532266695" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="continueButtonPressed:" destination="-1" eventType="touchUpInside" id="0k9-Sl-9QG"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="wNH-TU-KxG" secondAttribute="trailing" constant="58" id="1nr-Rp-d7z"/>
                         <constraint firstAttribute="height" constant="60" id="7QB-HT-iOq"/>
                         <constraint firstAttribute="bottom" secondItem="ZRl-89-gRO" secondAttribute="bottom" constant="8" id="Bdt-cg-dLR"/>
+                        <constraint firstAttribute="bottom" secondItem="wNH-TU-KxG" secondAttribute="bottom" constant="22" id="i2J-Y5-tY1"/>
                         <constraint firstItem="ZRl-89-gRO" firstAttribute="top" secondItem="87h-1G-t5q" secondAttribute="top" id="jMd-Og-yCn"/>
                         <constraint firstItem="ZRl-89-gRO" firstAttribute="leading" secondItem="87h-1G-t5q" secondAttribute="leading" constant="12" id="mn5-Hu-M5A"/>
                     </constraints>
@@ -272,27 +286,13 @@
                             </collectionViewFlowLayout>
                             <cells/>
                         </collectionView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNH-TU-KxG">
-                            <rect key="frame" x="317" y="-12" width="50" height="62"/>
-                            <fontDescription key="fontDescription" name="icomoon" family="icomoon" pointSize="50"/>
-                            <size key="titleShadowOffset" width="1" height="0.0"/>
-                            <state key="normal" title="">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.1532266695" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="continueButtonPressed:" destination="-1" eventType="touchUpInside" id="0k9-Sl-9QG"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="GaQ-XR-asZ" firstAttribute="leading" secondItem="Cy8-ap-fH9" secondAttribute="leading" id="5uh-Qw-RZB"/>
-                        <constraint firstAttribute="bottom" secondItem="wNH-TU-KxG" secondAttribute="bottom" id="IKi-EU-GQT"/>
                         <constraint firstAttribute="height" constant="50" id="KBh-Ry-wrN"/>
                         <constraint firstItem="GaQ-XR-asZ" firstAttribute="top" secondItem="Cy8-ap-fH9" secondAttribute="top" id="LEF-vO-2nq"/>
                         <constraint firstAttribute="trailing" secondItem="GaQ-XR-asZ" secondAttribute="trailing" id="ZAL-PE-sPi"/>
-                        <constraint firstAttribute="trailing" secondItem="wNH-TU-KxG" secondAttribute="trailing" constant="8" id="pf9-uA-2sy"/>
                     </constraints>
                 </view>
             </subviews>
