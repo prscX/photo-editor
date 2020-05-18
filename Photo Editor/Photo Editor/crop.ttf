@@ -1,0 +1,9 @@
+push graphic-context
+viewbox 0 0 105 105
+affine 1.25 0 0 1.25 0 0
+push graphic-context
+affine 0.1 0 0 -0.1 0 84
+fill '#000000'
+stroke 'none'
+pop graphic-context
+pop graphic-context
