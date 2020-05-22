@@ -44,7 +44,7 @@
 		059EA71D1EACB8790072C0FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059EA71C1EACB8790072C0FE /* AppDelegate.swift */; };
 		059EA7241EACB8790072C0FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 059EA7231EACB8790072C0FE /* Assets.xcassets */; };
 		059EA7271EACB8790072C0FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 059EA7251EACB8790072C0FE /* LaunchScreen.storyboard */; };
-		BD771541247826BC00216043 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD771540247826BB00216043 /* icomoon.ttf */; };
+		BD7715432478280300216043 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD7715422478280300216043 /* icomoon.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,7 +87,7 @@
 		059EA7231EACB8790072C0FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		059EA7261EACB8790072C0FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		059EA7281EACB8790072C0FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BD771540247826BB00216043 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
+		BD7715422478280300216043 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +120,7 @@
 		059EA71B1EACB8790072C0FE /* Photo Editor */ = {
 			isa = PBXGroup;
 			children = (
-				BD771540247826BB00216043 /* icomoon.ttf */,
+				BD7715422478280300216043 /* icomoon.ttf */,
 				056513081EF489B4009EA38F /* PhotoEditorViewController.swift */,
 				056513091EF489B4009EA38F /* StickersViewController.swift */,
 				0565130A1EF489B4009EA38F /* ColorCollectionViewCell.swift */,
@@ -226,7 +226,7 @@
 				059EA7271EACB8790072C0FE /* LaunchScreen.storyboard in Resources */,
 				0565133B1EF489C0009EA38F /* PhotoCropEditorBorder@3x.png in Resources */,
 				0565133D1EF489C0009EA38F /* PhotoEditorViewController.xib in Resources */,
-				BD771541247826BC00216043 /* icomoon.ttf in Resources */,
+				BD7715432478280300216043 /* icomoon.ttf in Resources */,
 				059EA7241EACB8790072C0FE /* Assets.xcassets in Resources */,
 				056513351EF489C0009EA38F /* ColorCollectionViewCell.xib in Resources */,
 				0565133A1EF489C0009EA38F /* PhotoCropEditorBorder@2x.png in Resources */,
