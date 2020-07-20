@@ -41,7 +41,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+        guard let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage else {
             picker.dismiss(animated: true, completion: nil)
             return
         }

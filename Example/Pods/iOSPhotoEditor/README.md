@@ -4,18 +4,12 @@
 - [x] Cropping 
 - [x] Adding images -Stickers-
 - [x] Adding Text with colors
-- [x] Drawing wihtcolors
+- [x] Drawing with colors
 - [x] Scaling and rotating objects 
 - [x] Deleting objects 
 - [x] Saving to photos and Sharing 
 - [x] Cool animations 
 - [x] Uses iOS Taptic Engine feedback 
-
-## New Features in V 0.4 
-
-Thanks to https://github.com/sprint84/PhotoCropEditor 
-
-It now supports Cropping 💃🏻
 
 ## Installation
 
@@ -50,7 +44,7 @@ $ pod install
 The `PhotoEditorViewController`.
 
 ```swift
-let photoEditor = UIStoryboard(name: "PhotoEditor", bundle: Bundle(for: PhotoEditorViewController.self)).instantiateViewController(withIdentifier: "PhotoEditorViewController") as! PhotoEditorViewController
+let photoEditor = PhotoEditorViewController(nibName:"PhotoEditorViewController",bundle: Bundle(for: PhotoEditorViewController.self))
 
 //PhotoEditorDelegate
 photoEditor.photoEditorDelegate = self
@@ -61,8 +55,11 @@ photoEditor.image = image
 //Stickers that the user will choose from to add on the image         
 photoEditor.stickers.append(UIImage(named: "sticker" )!)
 
-//To hide controls - array of enum control
+//Optional: To hide controls - array of enum control
 photoEditor.hiddenControls = [.crop, .draw, .share]
+
+//Optional: Colors for drawing and Text, If not set default values will be used
+photoEditor.colors = [.red,.blue,.green]
 
 //Present the View Controller
 present(photoEditor, animated: true, completion: nil)
@@ -70,20 +67,20 @@ present(photoEditor, animated: true, completion: nil)
 The `PhotoEditorDelegate` methods.
 
 ```swift
-func imageEdited(image: UIImage) {
+func doneEditing(image: UIImage) {
     // the edited image
 }
     
-func editorCanceled() {
+func canceledEditing() {
     print("Canceled")
 }
 
 ```
 
-<img src="screenshot.PNG" width="350" height="600" />
+<img src="Assets/screenshot.PNG" width="350" height="600" />
 
 # Live Demo appetize.io
-[![Demo](appetize.png)](https://appetize.io/app/jtanmwtzbz1favhvhw5g24n7b0?device=iphone7plus&scale=50&orientation=portrait&osVersion=10.3)
+[![Demo](Assets/appetize.png)](https://appetize.io/app/jtanmwtzbz1favhvhw5g24n7b0?device=iphone7plus&scale=50&orientation=portrait&osVersion=10.3)
 
 
 # Demo Video 
