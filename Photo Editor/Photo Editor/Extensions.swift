@@ -5,7 +5,7 @@
 //  Created by Adam Podsiadlo on 20/07/2020.
 //
 
-import Foundation
+import UIKit
 
 extension UIImageView {
     func load(url: String) {
