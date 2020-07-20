@@ -115,7 +115,7 @@ extension PhotoEditorViewController {
     }
     
     @IBAction func backgroundButtonTapper(_ sender: Any) {
-        // TODO: open background modal
+        addBackgroundViewController()
     }
 
     //MAKR: helper methods

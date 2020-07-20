@@ -47,6 +47,27 @@ protocol StickersViewControllerDelegate {
 }
 
 /**
+- didSelectColorBackground
+- didSelectImageBackground
+- backgroundViewDidDisappear
+*/
+protocol BackgroundViewControllerDelegate {
+    /**
+     - Parameter color: selected color from BackgroundViewController
+     */
+    func didSelectColorBackground(color: String)
+    /**
+     - Parameter image: selected image from BackgroundViewController
+     */
+    func didSelectImageBackground(image: String)
+    /**
+     BackgroundViewController did Disappear
+     */
+    func backgroundViewDidDisappear()
+}
+
+
+/**
  - didSelectColor
  */
 protocol ColorDelegate {

@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 extension PhotoEditorViewController {
-    
     func addStickersViewController() {
         stickersVCIsVisible = true
         hideToolbar(hide: true)

@@ -19,10 +19,10 @@ public final class PhotoEditorViewController: UIViewController {
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     //To hold the drawings and stickers
     @IBOutlet weak var canvasImageView: UIImageView!
-
+    
     @IBOutlet weak var topToolbar: UIView!
     @IBOutlet weak var bottomToolbar: UIView!
-
+    
     @IBOutlet weak var topGradient: UIView!
     @IBOutlet weak var bottomGradient: UIView!
     
@@ -52,13 +52,22 @@ public final class PhotoEditorViewController: UIViewController {
      Array of Colors that will show while drawing or typing
      */
     @objc public var colors  : [UIColor] = []
+    /**
+     Array of Background colors  that the user will choose from
+     */
+    @objc public var bgColors : [String] = []
+    /**
+     Array of Background Images that the user will choose from
+     */
+    @objc public var bgImages : [String] = []
     
     @objc public var photoEditorDelegate: PhotoEditorDelegate?
     var colorsCollectionViewDelegate: ColorsCollectionViewDelegate!
     
     // list of controls to be hidden
     @objc public var hiddenControls : [NSString] = []
-
+    
+    var backgroundVCIsVisible = false
     var stickersVCIsVisible = false
     var drawColor: UIColor = UIColor.black
     var textColor: UIColor = UIColor.white
@@ -75,7 +84,8 @@ public final class PhotoEditorViewController: UIViewController {
     
     
     var stickersViewController: StickersViewController!
-
+    var backgroundViewController: BackgroundViewController!
+    
     //Register Custom font before we load XIB
     public override func loadView() {
         registerFont()
@@ -109,6 +119,8 @@ public final class PhotoEditorViewController: UIViewController {
         
         configureCollectionView()
         stickersViewController = StickersViewController(nibName: "StickersViewController", bundle: Bundle(for: StickersViewController.self))
+        
+        backgroundViewController = BackgroundViewController(nibName: "BackgroundViewController", bundle: Bundle(for: BackgroundViewController.self))
         hideControls()
     }
     
@@ -120,7 +132,7 @@ public final class PhotoEditorViewController: UIViewController {
             let sizeToFit = textView.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width, height:CGFloat.greatestFiniteMagnitude))
             
             textView.bounds.size = CGSize(width: sizeToFit.width,
-            height: sizeToFit.height)
+                                          height: sizeToFit.height)
             textView.setNeedsDisplay()
         }
     }
@@ -153,6 +165,23 @@ public final class PhotoEditorViewController: UIViewController {
     
     func setBackgroundImage(image: UIImage) {
         imageBg.image = image
+    }
+    
+    func setBackgroundColor(color: String) {
+        self.imageBg.image = nil
+        self.imageBg.backgroundColor = UIColor(hexString: color)
+    }
+    
+    func setBackgroundImage(image: String) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: URL(string: image)!) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.imageBg.image = image
+                    }
+                }
+            }
+        }
     }
     
     func hideToolbar(hide: Bool) {
