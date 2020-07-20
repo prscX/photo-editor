@@ -18,21 +18,21 @@ public enum control: String {
     case save
     case share
     case clear
-
+    
     public func string() -> String {
         return self.rawValue
     }
 }
 
 extension PhotoEditorViewController {
-
-     //MARK: Top Toolbar
+    
+    //MARK: Top Toolbar
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
         photoEditorDelegate?.canceledEditing()
         self.dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func cropButtonTapped(_ sender: UIButton) {
         let controller = CropViewController()
         controller.delegate = self
@@ -40,11 +40,11 @@ extension PhotoEditorViewController {
         let navController = UINavigationController(rootViewController: controller)
         present(navController, animated: true, completion: nil)
     }
-
+    
     @IBAction func stickersButtonTapped(_ sender: Any) {
         addStickersViewController()
     }
-
+    
     @IBAction func drawButtonTapped(_ sender: Any) {
         isDrawing = true
         canvasImageView.isUserInteractionEnabled = false
@@ -52,26 +52,31 @@ extension PhotoEditorViewController {
         colorPickerView.isHidden = false
         hideToolbar(hide: true)
     }
-
+    
     @IBAction func textButtonTapped(_ sender: Any) {
-        isTyping = true
-        let textView = UITextView(frame: CGRect(x: 0, y: canvasImageView.center.y,
-                                                width: UIScreen.main.bounds.width, height: 30))
-        
-        textView.textAlignment = .center
-        textView.font = UIFont(name: "Helvetica", size: 30)
-        textView.textColor = textColor
-        textView.layer.shadowColor = UIColor.black.cgColor
-        textView.layer.shadowOffset = CGSize(width: 1.0, height: 0.0)
-        textView.layer.shadowOpacity = 0.2
-        textView.layer.shadowRadius = 1.0
-        textView.layer.backgroundColor = UIColor.clear.cgColor
-        textView.autocorrectionType = .no
-        textView.isScrollEnabled = false
-        textView.delegate = self
-        self.canvasImageView.addSubview(textView)
-        addGestures(view: textView)
-        textView.becomeFirstResponder()
+        // For V1 only one text is available, to use multiple texts remove if / else case
+        if (activeTextView == nil || !self.canvasImageView.subviews.contains(activeTextView!)) {
+            isTyping = true
+            let textView = UITextView(frame: CGRect(x: 0, y: canvasImageView.center.y,
+                                                    width: UIScreen.main.bounds.width, height: 30))
+            
+            textView.textAlignment = .center
+            textView.font = UIFont(name: "Helvetica", size: 30)
+            textView.textColor = textColor
+            textView.layer.shadowColor = UIColor.black.cgColor
+            textView.layer.shadowOffset = CGSize(width: 1.0, height: 0.0)
+            textView.layer.shadowOpacity = 0.2
+            textView.layer.shadowRadius = 1.0
+            textView.layer.backgroundColor = UIColor.clear.cgColor
+            textView.autocorrectionType = .no
+            textView.isScrollEnabled = false
+            textView.delegate = self
+            self.canvasImageView.addSubview(textView)
+            addGestures(view: textView)
+            textView.becomeFirstResponder()
+        } else {
+            activeTextView?.becomeFirstResponder()
+        }
     }    
     
     @IBAction func doneButtonTapped(_ sender: Any) {
@@ -94,7 +99,7 @@ extension PhotoEditorViewController {
         if let popoverController = activity.popoverPresentationController {
             popoverController.barButtonItem = UIBarButtonItem(customView: sender)
         }
-
+        
         present(activity, animated: true, completion: nil)
         
     }
@@ -117,7 +122,7 @@ extension PhotoEditorViewController {
     @IBAction func backgroundButtonTapper(_ sender: Any) {
         addBackgroundViewController()
     }
-
+    
     //MAKR: helper methods
     
     @objc func image(_ image: UIImage, withPotentialError error: NSErrorPointer, contextInfo: UnsafeRawPointer) {
