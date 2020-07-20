@@ -13,8 +13,28 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func showPhotoEditor () {
+        let photoEditor = PhotoEditorViewController(nibName:"PhotoEditorViewController",bundle: Bundle(for: PhotoEditorViewController.self))
+        photoEditor.photoEditorDelegate = self
+        photoEditor.image = UIImage(named: "test")
+        
+        //Colors for drawing and Text, If not set default values will be used
+        //photoEditor.colors = [.red, .blue, .green]
+        
+        //Stickers that the user will choose from to add on the image
+        for i in 0...10 {
+            photoEditor.stickers.append(UIImage(named: i.description )!)
+        }
+        
+        photoEditor.modalPresentationStyle = UIModalPresentationStyle.fullScreen;
+        
+        present(photoEditor, animated: true, completion: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated);
+        
+        showPhotoEditor()
     }
     
     @IBAction func pickImageButtonTapped(_ sender: Any) {
@@ -38,8 +58,8 @@ extension ViewController: PhotoEditorDelegate {
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [String : Any]) {
+    private func imagePickerController(_ picker: UIImagePickerController,
+                                       didFinishPickingMediaWithInfo info: [String : Any]) {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage else {
             picker.dismiss(animated: true, completion: nil)
