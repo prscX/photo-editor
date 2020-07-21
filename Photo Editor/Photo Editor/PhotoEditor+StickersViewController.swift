@@ -12,7 +12,6 @@ import UIKit
 extension PhotoEditorViewController {
     func addGifsStickersViewController() {
         gifsStickersVCIsVisible = true
-        hideToolbar(hide: true)
         self.canvasImageView.isUserInteractionEnabled = false
         gifsStickersViewController.gifsStickersViewControllerDelegate = self
         
@@ -48,16 +47,26 @@ extension PhotoEditorViewController {
 
 extension PhotoEditorViewController: GifsStickersViewControllerDelegate {
     
-    func didSelectView(view: UIView) {
+    func didSelectGif(gif: String, width: Int, height: Int) {
         self.removeStickersView()
         
-        view.center = canvasImageView.center
-        self.canvasImageView.addSubview(view)
+        
+        let loader = UIActivityIndicatorView.init(style: .gray)
+        
+        let imageView = UIImageView()
+        imageView.setGifFromURL(URL.init(string: gif)!, customLoader: loader)
+        imageView.contentMode = .scaleAspectFit
+        imageView.frame.size = CGSize(width: width, height: height)
+        imageView.center = canvasImageView.center
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
+        
+        self.canvasImageView.addSubview(imageView)
         //Gestures
-        addGestures(view: view)
+        addGestures(view: imageView)
     }
     
-    func didSelectImage(image: UIImage) {
+    func didSelectSticker(image: UIImage) {
         self.removeStickersView()
         
         let imageView = UIImageView(image: image)

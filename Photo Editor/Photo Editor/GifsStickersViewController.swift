@@ -8,6 +8,24 @@
 
 import UIKit
 
+struct GiphyGif: Decodable, Hashable {
+    let url: String
+    let height: String
+    let width: String
+}
+
+struct GiphyGifSize: Decodable, Hashable {
+    let downsized: GiphyGif
+}
+
+struct GiphyGifImages: Decodable, Hashable {
+    let images: GiphyGifSize
+}
+
+struct GiphyResponse: Decodable {
+    let data: [GiphyGifImages]
+}
+
 class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var holdView: UIView!
@@ -15,31 +33,32 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
     @IBOutlet weak var segmentedView: UISegmentedControl!
     
     var collectioView: UICollectionView!
-    var emojisCollectioView: UICollectionView!
+    var gifsCollectionView: UICollectionView!
     
-    var emojisDelegate: EmojisCollectionViewDelegate!
+    var gifsDelegate: GifsCollectionViewDelegate!
     
     var stickers : [UIImage] = []
+    var gifs: [GiphyGif] = []
     var gifsStickersViewControllerDelegate : GifsStickersViewControllerDelegate?
     
     let screenSize = UIScreen.main.bounds.size
     
     let fullView: CGFloat = 100 // remainder of screen height
-      var bottomPadding: CGFloat {
-          var topPadding:CGFloat? = 0
-          if #available(iOS 11.0, *) {
-              let window = UIApplication.shared.keyWindow
-              topPadding = window?.safeAreaInsets.top
-          }
-          
-          return topPadding!
-      }
-      
+    var bottomPadding: CGFloat {
+        var topPadding:CGFloat? = 0
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            topPadding = window?.safeAreaInsets.top
+        }
+        
+        return topPadding!
+    }
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadGiphy()
         configureCollectionViews()
         scrollView.contentSize = CGSize(width: 2.0 * screenSize.width,
                                         height: scrollView.frame.size.height)
@@ -47,24 +66,26 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
         scrollView.isPagingEnabled = true
         scrollView.delegate = self
         
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
         segmentedView.setTitle("STICKERS", forSegmentAt: 0)
-               segmentedView.setTitle("GIFS", forSegmentAt: 1)
-               
-               self.view.layer.cornerRadius = 20
-               self.view.clipsToBounds = true
+        segmentedView.setTitle("GIFS", forSegmentAt: 1)
+        
+        self.view.layer.cornerRadius = 20
+        self.view.clipsToBounds = true
         
         if #available(iOS 11.0, *) {
-                   self.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-               } else {
-                   let path = UIBezierPath(roundedRect: self.view.bounds,
-                                           byRoundingCorners: [.topRight, .topLeft],
-                                           cornerRadii: CGSize(width: 20, height: 20))
-                   
-                   let maskLayer = CAShapeLayer()
-                   
-                   maskLayer.path = path.cgPath
-                   self.view.layer.mask = maskLayer
-               }
+            self.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        } else {
+            let path = UIBezierPath(roundedRect: self.view.bounds,
+                                    byRoundingCorners: [.topRight, .topLeft],
+                                    cornerRadii: CGSize(width: 20, height: 20))
+            
+            let maskLayer = CAShapeLayer()
+            
+            maskLayer.path = path.cgPath
+            self.view.layer.mask = maskLayer
+        }
         
         holdView.layer.cornerRadius = 3
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(GifsStickersViewController.panGesture))
@@ -89,6 +110,30 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
             }
             
         }
+    }
+    
+    func loadGiphy () {
+        let url = URL(string: "https://api.giphy.com/v1/gifs/trending?api_key=K60P8olEveFJVYWFp87IlgqT4CmXcMUe")!
+        
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            guard let data = data else { return }
+            let gifs: GiphyResponse = try! JSONDecoder().decode(GiphyResponse.self, from: data)
+            
+            var giphyGifs: [GiphyGif] = [];
+            
+            for image in gifs.data {
+                giphyGifs.append(image.images.downsized)
+            }
+            
+            self.gifsDelegate.setData(data: giphyGifs)
+            
+            DispatchQueue.main.async{
+                self.gifsCollectionView.reloadData()
+                self.gifsCollectionView.layoutIfNeeded()
+            }
+        }
+        
+        task.resume()
     }
     
     func configureCollectionViews() {
@@ -116,26 +161,26 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
         
         //-----------------------------------
         
-        let emojisFrame = CGRect(x: scrollView.frame.size.width,
-                                 y: 0,
-                                 width: UIScreen.main.bounds.width,
-                                 height: view.frame.height - 40)
+        let gifsFrame = CGRect(x: scrollView.frame.size.width,
+                               y: 0,
+                               width: UIScreen.main.bounds.width,
+                               height: view.frame.height - 40)
         
-        let emojislayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        emojislayout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
-        emojislayout.itemSize = CGSize(width: 70, height: 70)
+        let gifslayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        gifslayout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
+    
+        gifsCollectionView = UICollectionView(frame: gifsFrame, collectionViewLayout: gifslayout)
+        gifsCollectionView.backgroundColor = .clear
+        scrollView.addSubview(gifsCollectionView)
+        gifsDelegate = GifsCollectionViewDelegate()
+        //        gifsDelegate.gifs = gifs
+        gifsDelegate.gifsStickersViewControllerDelegate = gifsStickersViewControllerDelegate
+        gifsCollectionView.delegate = gifsDelegate
+        gifsCollectionView.dataSource = gifsDelegate
         
-        emojisCollectioView = UICollectionView(frame: emojisFrame, collectionViewLayout: emojislayout)
-        emojisCollectioView.backgroundColor = .clear
-        scrollView.addSubview(emojisCollectioView)
-        emojisDelegate = EmojisCollectionViewDelegate()
-        emojisDelegate.gifsStickersViewControllerDelegate = gifsStickersViewControllerDelegate
-        emojisCollectioView.delegate = emojisDelegate
-        emojisCollectioView.dataSource = emojisDelegate
-        
-        emojisCollectioView.register(
-            UINib(nibName: "EmojiCollectionViewCell", bundle: Bundle(for: EmojiCollectionViewCell.self)),
-            forCellWithReuseIdentifier: "EmojiCollectionViewCell")
+        gifsCollectionView.register(
+            UINib(nibName: "GifCollectionViewCell", bundle: Bundle(for: GifCollectionViewCell.self)),
+            forCellWithReuseIdentifier: "GifCollectionViewCell")
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -162,15 +207,15 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
         collectioView.frame = CGRect(x: 0,
                                      y: 0,
                                      width: UIScreen.main.bounds.width,
-                                     height: view.frame.height - 40)
+                                     height: view.frame.height - 100)
         
-        emojisCollectioView.frame = CGRect(x: scrollView.frame.size.width,
-                                           y: 0,
-                                           width: UIScreen.main.bounds.width,
-                                           height: view.frame.height - 40)
+        gifsCollectionView.frame = CGRect(x: scrollView.frame.size.width,
+                                          y: 0,
+                                          width: UIScreen.main.bounds.width,
+                                          height: view.frame.height - 100)
         
         scrollView.contentSize = CGSize(width: 2.0 * screenSize.width,
-                                        height: scrollView.frame.size.height)
+                                        height: scrollView.frame.size.height - 100)
     }
     
     override func didReceiveMemoryWarning() {
@@ -267,7 +312,7 @@ extension GifsStickersViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        gifsStickersViewControllerDelegate?.didSelectImage(image: stickers[indexPath.item])
+        gifsStickersViewControllerDelegate?.didSelectSticker(image: stickers[indexPath.item])
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

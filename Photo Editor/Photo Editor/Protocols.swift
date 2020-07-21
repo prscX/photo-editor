@@ -33,15 +33,15 @@ import UIKit
  */
 protocol GifsStickersViewControllerDelegate {
     /**
-     - Parameter view: selected view from StickersViewController
+     - Parameter view: selected sticker from GifsStickersViewController
      */
-    func didSelectView(view: UIView)
+    func didSelectSticker(image: UIImage)
     /**
-     - Parameter image: selected Image from StickersViewController
+     - Parameter image: selected Gif from GifsStickersViewController
      */
-    func didSelectImage(image: UIImage)
+    func didSelectGif(gif: String, width: Int, height: Int)
     /**
-     StickersViewController did Disappear
+     GifsStickersViewController did Disappear
      */
     func stickersViewDidDisappear()
 }

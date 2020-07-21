@@ -22,5 +22,10 @@
   "source_files": "Photo Editor/**/*.{swift}",
   "exclude_files": "Photo Editor/**/AppDelegate.swift",
   "resources": "Photo Editor/**/*.{png,jpeg,jpg,storyboard,xib,ttf}",
+  "dependencies": {
+    "SwiftyGif": [
+
+    ]
+  },
   "swift_version": "4.2"
 }

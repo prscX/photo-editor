@@ -1,15 +1,22 @@
 PODS:
-  - iOSPhotoEditor (0.5)
+  - iOSPhotoEditor (0.5):
+    - SwiftyGif
+  - SwiftyGif (5.3.0)
 
 DEPENDENCIES:
   - iOSPhotoEditor (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - SwiftyGif
 
 EXTERNAL SOURCES:
   iOSPhotoEditor:
     :path: "../"
 
 SPEC CHECKSUMS:
-  iOSPhotoEditor: 0f36d2c064d2999b7f4cd20c9db679581d24f7bf
+  iOSPhotoEditor: e2a425b276ea51a0399651191ed8334f586a8b4a
+  SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
 
 PODFILE CHECKSUM: ea06b1d06d0409ebea265171df70afd29804d0c8
 
