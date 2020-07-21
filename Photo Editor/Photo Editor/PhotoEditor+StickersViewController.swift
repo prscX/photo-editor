@@ -10,43 +10,43 @@ import Foundation
 import UIKit
 
 extension PhotoEditorViewController {
-    func addStickersViewController() {
-        stickersVCIsVisible = true
+    func addGifsStickersViewController() {
+        gifsStickersVCIsVisible = true
         hideToolbar(hide: true)
         self.canvasImageView.isUserInteractionEnabled = false
-        stickersViewController.stickersViewControllerDelegate = self
+        gifsStickersViewController.gifsStickersViewControllerDelegate = self
         
         for image in self.stickers {
-            stickersViewController.stickers.append(image)
+            gifsStickersViewController.stickers.append(image)
         }
-        self.addChild(stickersViewController)
-        self.view.addSubview(stickersViewController.view)
-        stickersViewController.didMove(toParent: self)
+        self.addChild(gifsStickersViewController)
+        self.view.addSubview(gifsStickersViewController.view)
+        gifsStickersViewController.didMove(toParent: self)
         let height = view.frame.height
         let width  = view.frame.width
-        stickersViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY , width: width, height: height)
+        gifsStickersViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY , width: width, height: height)
     }
     
     func removeStickersView() {
-        stickersVCIsVisible = false
+        gifsStickersVCIsVisible = false
         self.canvasImageView.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.3,
                        delay: 0,
                        options: UIView.AnimationOptions.curveEaseIn,
                        animations: { () -> Void in
-                        var frame = self.stickersViewController.view.frame
+                        var frame = self.gifsStickersViewController.view.frame
                         frame.origin.y = UIScreen.main.bounds.maxY
-                        self.stickersViewController.view.frame = frame
+                        self.gifsStickersViewController.view.frame = frame
                         
         }, completion: { (finished) -> Void in
-            self.stickersViewController.view.removeFromSuperview()
-            self.stickersViewController.removeFromParent()
+            self.gifsStickersViewController.view.removeFromSuperview()
+            self.gifsStickersViewController.removeFromParent()
             self.hideToolbar(hide: false)
         })
     }    
 }
 
-extension PhotoEditorViewController: StickersViewControllerDelegate {
+extension PhotoEditorViewController: GifsStickersViewControllerDelegate {
     
     func didSelectView(view: UIView) {
         self.removeStickersView()
@@ -71,7 +71,7 @@ extension PhotoEditorViewController: StickersViewControllerDelegate {
     }
     
     func stickersViewDidDisappear() {
-        stickersVCIsVisible = false
+        gifsStickersVCIsVisible = false
         hideToolbar(hide: false)
     }
     

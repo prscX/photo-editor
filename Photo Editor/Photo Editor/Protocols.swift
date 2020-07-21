@@ -31,7 +31,7 @@ import UIKit
  - didSelectImage
  - stickersViewDidDisappear
  */
-protocol StickersViewControllerDelegate {
+protocol GifsStickersViewControllerDelegate {
     /**
      - Parameter view: selected view from StickersViewController
      */

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		056513191EF489B4009EA38F /* PhotoEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056513081EF489B4009EA38F /* PhotoEditorViewController.swift */; };
-		0565131A1EF489B4009EA38F /* StickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056513091EF489B4009EA38F /* StickersViewController.swift */; };
 		0565131B1EF489B4009EA38F /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0565130A1EF489B4009EA38F /* ColorCollectionViewCell.swift */; };
 		0565131C1EF489B4009EA38F /* ColorsCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0565130B1EF489B4009EA38F /* ColorsCollectionViewDelegate.swift */; };
 		0565131D1EF489B4009EA38F /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0565130C1EF489B4009EA38F /* EmojiCollectionViewCell.swift */; };
@@ -24,7 +23,6 @@
 		056513271EF489B4009EA38F /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056513161EF489B4009EA38F /* CropViewController.swift */; };
 		056513281EF489B4009EA38F /* UIImage+Crop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056513171EF489B4009EA38F /* UIImage+Crop.swift */; };
 		056513291EF489B4009EA38F /* ResizeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056513181EF489B4009EA38F /* ResizeControl.swift */; };
-		056513341EF489C0009EA38F /* StickersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0565132A1EF489C0009EA38F /* StickersViewController.xib */; };
 		056513351EF489C0009EA38F /* ColorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0565132B1EF489C0009EA38F /* ColorCollectionViewCell.xib */; };
 		056513361EF489C0009EA38F /* EmojiCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0565132C1EF489C0009EA38F /* EmojiCollectionViewCell.xib */; };
 		056513371EF489C0009EA38F /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0565132D1EF489C0009EA38F /* icomoon.ttf */; };
@@ -55,11 +53,12 @@
 		964F1C7724C5E3AB00F96C62 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964F1C7024C5E3AB00F96C62 /* Extensions.swift */; };
 		964F1C7824C5E3AB00F96C62 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964F1C7124C5E3AB00F96C62 /* ImageCollectionViewCell.swift */; };
 		964F1C7924C5E3AB00F96C62 /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 964F1C7224C5E3AB00F96C62 /* ImageCollectionViewCell.xib */; };
+		96C9D47924C6C36100BB803D /* GifsStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C9D47824C6C36100BB803D /* GifsStickersViewController.swift */; };
+		96C9D47B24C6C36700BB803D /* GifsStickersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96C9D47A24C6C36700BB803D /* GifsStickersViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		056513081EF489B4009EA38F /* PhotoEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoEditorViewController.swift; sourceTree = "<group>"; };
-		056513091EF489B4009EA38F /* StickersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickersViewController.swift; sourceTree = "<group>"; };
 		0565130A1EF489B4009EA38F /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		0565130B1EF489B4009EA38F /* ColorsCollectionViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		0565130C1EF489B4009EA38F /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -75,7 +74,6 @@
 		056513161EF489B4009EA38F /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
 		056513171EF489B4009EA38F /* UIImage+Crop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Crop.swift"; sourceTree = "<group>"; };
 		056513181EF489B4009EA38F /* ResizeControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizeControl.swift; sourceTree = "<group>"; };
-		0565132A1EF489C0009EA38F /* StickersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StickersViewController.xib; sourceTree = "<group>"; };
 		0565132B1EF489C0009EA38F /* ColorCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ColorCollectionViewCell.xib; sourceTree = "<group>"; };
 		0565132C1EF489C0009EA38F /* EmojiCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmojiCollectionViewCell.xib; sourceTree = "<group>"; };
 		0565132D1EF489C0009EA38F /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
@@ -108,6 +106,8 @@
 		964F1C7024C5E3AB00F96C62 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		964F1C7124C5E3AB00F96C62 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		964F1C7224C5E3AB00F96C62 /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		96C9D47824C6C36100BB803D /* GifsStickersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifsStickersViewController.swift; sourceTree = "<group>"; };
+		96C9D47A24C6C36700BB803D /* GifsStickersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GifsStickersViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,7 +141,6 @@
 			isa = PBXGroup;
 			children = (
 				056513081EF489B4009EA38F /* PhotoEditorViewController.swift */,
-				056513091EF489B4009EA38F /* StickersViewController.swift */,
 				0565130A1EF489B4009EA38F /* ColorCollectionViewCell.swift */,
 				0565130B1EF489B4009EA38F /* ColorsCollectionViewDelegate.swift */,
 				0565130C1EF489B4009EA38F /* EmojiCollectionViewCell.swift */,
@@ -156,10 +155,12 @@
 				964F1C6D24C5E3AB00F96C62 /* PhotoEditor+BackgroundViewController.swift */,
 				0565130F1EF489B4009EA38F /* UIImage+Size.swift */,
 				056513101EF489B4009EA38F /* UIImageView+Alpha.swift */,
+				96C9D47824C6C36100BB803D /* GifsStickersViewController.swift */,
 				056513111EF489B4009EA38F /* UIView+Image.swift */,
 				056513121EF489B4009EA38F /* Protocols.swift */,
 				056513131EF489B4009EA38F /* GradientView.swift */,
 				056513141EF489B4009EA38F /* CropView.swift */,
+				96C9D47A24C6C36700BB803D /* GifsStickersViewController.xib */,
 				056513151EF489B4009EA38F /* CropRectView.swift */,
 				056513161EF489B4009EA38F /* CropViewController.swift */,
 				056513171EF489B4009EA38F /* UIImage+Crop.swift */,
@@ -176,7 +177,6 @@
 				056513431EF489CD009EA38F /* PhotoEditor+Controls.swift */,
 				056513441EF489CD009EA38F /* PhotoEditor+Crop.swift */,
 				056513451EF489CD009EA38F /* PhotoEditor+Font.swift */,
-				0565132A1EF489C0009EA38F /* StickersViewController.xib */,
 				0565132B1EF489C0009EA38F /* ColorCollectionViewCell.xib */,
 				964F1C2424C5B3F900F96C62 /* PhotoEditorViewController.xib */,
 				0565132C1EF489C0009EA38F /* EmojiCollectionViewCell.xib */,
@@ -259,6 +259,7 @@
 				964F1C7924C5E3AB00F96C62 /* ImageCollectionViewCell.xib in Resources */,
 				059EA7271EACB8790072C0FE /* LaunchScreen.storyboard in Resources */,
 				0565133B1EF489C0009EA38F /* PhotoCropEditorBorder@3x.png in Resources */,
+				96C9D47B24C6C36700BB803D /* GifsStickersViewController.xib in Resources */,
 				059EA7241EACB8790072C0FE /* Assets.xcassets in Resources */,
 				056513351EF489C0009EA38F /* ColorCollectionViewCell.xib in Resources */,
 				0565133A1EF489C0009EA38F /* PhotoCropEditorBorder@2x.png in Resources */,
@@ -266,7 +267,6 @@
 				056513371EF489C0009EA38F /* icomoon.ttf in Resources */,
 				056513381EF489C0009EA38F /* LaunchScreen.storyboard in Resources */,
 				964F1C2B24C5B60000F96C62 /* icon_bg@3x.png in Resources */,
-				056513341EF489C0009EA38F /* StickersViewController.xib in Resources */,
 				964F1C7324C5E3AB00F96C62 /* BackgroundViewController.xib in Resources */,
 				964F1C2724C5B5F200F96C62 /* gradient@3x.png in Resources */,
 				056513361EF489C0009EA38F /* EmojiCollectionViewCell.xib in Resources */,
@@ -298,12 +298,12 @@
 				0565134D1EF489CD009EA38F /* PhotoEditor+Font.swift in Sources */,
 				0565131C1EF489B4009EA38F /* ColorsCollectionViewDelegate.swift in Sources */,
 				0565131E1EF489B4009EA38F /* EmojisCollectionViewDelegate.swift in Sources */,
-				0565131A1EF489B4009EA38F /* StickersViewController.swift in Sources */,
 				056513481EF489CD009EA38F /* PhotoEditor+Keyboard.swift in Sources */,
 				964F1C7624C5E3AB00F96C62 /* ImageCollectionViewDelegate.swift in Sources */,
 				0565131B1EF489B4009EA38F /* ColorCollectionViewCell.swift in Sources */,
 				0565131F1EF489B4009EA38F /* StickerCollectionViewCell.swift in Sources */,
 				964F1C7824C5E3AB00F96C62 /* ImageCollectionViewCell.swift in Sources */,
+				96C9D47924C6C36100BB803D /* GifsStickersViewController.swift in Sources */,
 				056513251EF489B4009EA38F /* CropView.swift in Sources */,
 				0565134A1EF489CD009EA38F /* PhotoEditor+UITextView.swift in Sources */,
 				056513241EF489B4009EA38F /* GradientView.swift in Sources */,

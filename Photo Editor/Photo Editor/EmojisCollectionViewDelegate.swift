@@ -10,7 +10,7 @@ import UIKit
 
 class EmojisCollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
-    var stickersViewControllerDelegate : StickersViewControllerDelegate?
+    var gifsStickersViewControllerDelegate : GifsStickersViewControllerDelegate?
 
     let emojiRanges = [
         0x1F601...0x1F64F, // emoticons
@@ -41,7 +41,7 @@ class EmojisCollectionViewDelegate: NSObject, UICollectionViewDataSource, UIColl
         emojiLabel.textAlignment = .center
         emojiLabel.text = emojis[indexPath.item]
         emojiLabel.font = UIFont.systemFont(ofSize: 70)
-        stickersViewControllerDelegate?.didSelectView(view: emojiLabel)
+        gifsStickersViewControllerDelegate?.didSelectView(view: emojiLabel)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

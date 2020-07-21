@@ -8,11 +8,11 @@
 
 import UIKit
 
-class StickersViewController: UIViewController, UIGestureRecognizerDelegate {
-    @IBOutlet weak var headerView: UIView!
+class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate {
+    
     @IBOutlet weak var holdView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var segmentedView: UISegmentedControl!
     
     var collectioView: UICollectionView!
     var emojisCollectioView: UICollectionView!
@@ -20,14 +20,21 @@ class StickersViewController: UIViewController, UIGestureRecognizerDelegate {
     var emojisDelegate: EmojisCollectionViewDelegate!
     
     var stickers : [UIImage] = []
-    var stickersViewControllerDelegate : StickersViewControllerDelegate?
+    var gifsStickersViewControllerDelegate : GifsStickersViewControllerDelegate?
     
     let screenSize = UIScreen.main.bounds.size
     
     let fullView: CGFloat = 100 // remainder of screen height
-    var partialView: CGFloat {
-        return UIScreen.main.bounds.height - 380
-    }
+      var bottomPadding: CGFloat {
+          var topPadding:CGFloat? = 0
+          if #available(iOS 11.0, *) {
+              let window = UIApplication.shared.keyWindow
+              topPadding = window?.safeAreaInsets.top
+          }
+          
+          return topPadding!
+      }
+      
     
     
     override func viewDidLoad() {
@@ -39,12 +46,49 @@ class StickersViewController: UIViewController, UIGestureRecognizerDelegate {
         
         scrollView.isPagingEnabled = true
         scrollView.delegate = self
-        pageControl.numberOfPages = 2
+        
+        segmentedView.setTitle("STICKERS", forSegmentAt: 0)
+               segmentedView.setTitle("GIFS", forSegmentAt: 1)
+               
+               self.view.layer.cornerRadius = 20
+               self.view.clipsToBounds = true
+        
+        if #available(iOS 11.0, *) {
+                   self.view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+               } else {
+                   let path = UIBezierPath(roundedRect: self.view.bounds,
+                                           byRoundingCorners: [.topRight, .topLeft],
+                                           cornerRadii: CGSize(width: 20, height: 20))
+                   
+                   let maskLayer = CAShapeLayer()
+                   
+                   maskLayer.path = path.cgPath
+                   self.view.layer.mask = maskLayer
+               }
         
         holdView.layer.cornerRadius = 3
-        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(StickersViewController.panGesture))
+        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(GifsStickersViewController.panGesture))
         gesture.delegate = self
         view.addGestureRecognizer(gesture)
+    }
+    
+    @IBAction func segmentedControlButtonClickAction(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions.curveLinear, animations: {
+                    self.scrollView.contentOffset = CGPoint(x: 0, y:0);
+                }, completion: nil)
+            }
+            
+        }
+        else {
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions.curveLinear, animations: {
+                    self.scrollView.contentOffset = CGPoint(x:self.scrollView.frame.size.width, y:0);
+                }, completion: nil)
+            }
+            
+        }
     }
     
     func configureCollectionViews() {
@@ -55,8 +99,8 @@ class StickersViewController: UIViewController, UIGestureRecognizerDelegate {
                            height: view.frame.height - 40)
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        let width = (CGFloat) ((screenSize.width - 30) / 3.0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
+        let width = (CGFloat) ((screenSize.width - 30) / 2.0)
         layout.itemSize = CGSize(width: width, height: 100)
         
         collectioView = UICollectionView(frame: frame, collectionViewLayout: layout)
@@ -78,14 +122,14 @@ class StickersViewController: UIViewController, UIGestureRecognizerDelegate {
                                  height: view.frame.height - 40)
         
         let emojislayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        emojislayout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        emojislayout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
         emojislayout.itemSize = CGSize(width: 70, height: 70)
         
         emojisCollectioView = UICollectionView(frame: emojisFrame, collectionViewLayout: emojislayout)
         emojisCollectioView.backgroundColor = .clear
         scrollView.addSubview(emojisCollectioView)
         emojisDelegate = EmojisCollectionViewDelegate()
-        emojisDelegate.stickersViewControllerDelegate = stickersViewControllerDelegate
+        emojisDelegate.gifsStickersViewControllerDelegate = gifsStickersViewControllerDelegate
         emojisCollectioView.delegate = emojisDelegate
         emojisCollectioView.dataSource = emojisDelegate
         
@@ -105,11 +149,11 @@ class StickersViewController: UIViewController, UIGestureRecognizerDelegate {
         UIView.animate(withDuration: 0.6) { [weak self] in
             guard let `self` = self else { return }
             let frame = self.view.frame
-            let yComponent = self.partialView
+            let yComponent = self.bottomPadding
             self.view.frame = CGRect(x: 0,
                                      y: yComponent,
                                      width: frame.width,
-                                     height: UIScreen.main.bounds.height - self.partialView)
+                                     height: UIScreen.main.bounds.height - self.bottomPadding)
         }
     }
     
@@ -149,20 +193,20 @@ class StickersViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         
         if recognizer.state == .ended {
-            var duration =  velocity.y < 0 ? Double((y - fullView) / -velocity.y) : Double((partialView - y) / velocity.y )
+            var duration =  velocity.y < 0 ? Double((y - fullView) / -velocity.y) : Double((bottomPadding - y) / velocity.y )
             duration = duration > 1.3 ? 1 : duration
             //velocity is direction of gesture
             UIView.animate(withDuration: duration, delay: 0.0, options: [.allowUserInteraction], animations: {
                 if  velocity.y >= 0 {
-                    if y + translation.y >= self.partialView  {
+                    if y + translation.y >= self.bottomPadding  {
                         self.removeBottomSheetView()
                     } else {
-                        self.view.frame = CGRect(x: 0, y: self.partialView, width: self.view.frame.width, height: UIScreen.main.bounds.height - self.partialView)
+                        self.view.frame = CGRect(x: 0, y: self.bottomPadding, width: self.view.frame.width, height: UIScreen.main.bounds.height - self.bottomPadding)
                         self.view.layoutIfNeeded()
                     }
                 } else {
-                    if y + translation.y >= self.partialView  {
-                        self.view.frame = CGRect(x: 0, y: self.partialView, width: self.view.frame.width, height: UIScreen.main.bounds.height - self.partialView)
+                    if y + translation.y >= self.bottomPadding  {
+                        self.view.frame = CGRect(x: 0, y: self.bottomPadding, width: self.view.frame.width, height: UIScreen.main.bounds.height - self.bottomPadding)
                         self.view.layoutIfNeeded()
                     } else {
                         self.view.frame = CGRect(x: 0, y: self.fullView, width: self.view.frame.width, height: UIScreen.main.bounds.height - self.fullView)
@@ -186,7 +230,7 @@ class StickersViewController: UIViewController, UIGestureRecognizerDelegate {
         }, completion: { (finished) -> Void in
             self.view.removeFromSuperview()
             self.removeFromParent()
-            self.stickersViewControllerDelegate?.stickersViewDidDisappear()
+            self.gifsStickersViewControllerDelegate?.stickersViewDidDisappear()
         })
     }
     
@@ -204,24 +248,26 @@ class StickersViewController: UIViewController, UIGestureRecognizerDelegate {
     
 }
 
-extension StickersViewController: UIScrollViewDelegate {
+extension GifsStickersViewController: UIScrollViewDelegate {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let pageWidth = scrollView.bounds.width
-        let pageFraction = scrollView.contentOffset.x / pageWidth
-        self.pageControl.currentPage = Int(round(pageFraction))
+    func scrollViewDidScroll(_ sender: UIScrollView) {
+        if (sender.tag == 1) {
+            let pageWidth = scrollView.bounds.width
+            let pageFraction = scrollView.contentOffset.x / pageWidth
+            segmentedView.selectedSegmentIndex = Int(round(pageFraction))
+        }
     }
 }
 
 // MARK: - UICollectionViewDataSource
-extension StickersViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension GifsStickersViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return stickers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        stickersViewControllerDelegate?.didSelectImage(image: stickers[indexPath.item])
+        gifsStickersViewControllerDelegate?.didSelectImage(image: stickers[indexPath.item])
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
