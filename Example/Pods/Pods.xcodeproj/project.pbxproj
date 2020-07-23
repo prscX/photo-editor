@@ -43,8 +43,8 @@
 		8730232E24964DEC037C82ECADACABCA /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641CC8A6ECF9A175FF70B20166CA971 /* ColorCollectionViewCell.swift */; };
 		9034F53CCC73E59FD5814E499E1E7EE6 /* icon_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = ED5D4EC51B203B47E68E39849445C58E /* icon_bg@3x.png */; };
 		93967B8A3D16904BE35610777A17A7E6 /* PhotoEditor+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93FECE7CBEB2982CD1EE690004E2325 /* PhotoEditor+Font.swift */; };
-		96DE233924C9CD4A002AA9DD /* GiphyApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE233824C9CD4A002AA9DD /* GiphyApiManager.swift */; };
-		96DE233B24C9D2A7002AA9DD /* GifsStickersViewController+GiphyApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE233A24C9D2A7002AA9DD /* GifsStickersViewController+GiphyApi.swift */; };
+		96DE234224C9EB66002AA9DD /* GifsStickersViewController+GiphyApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE234024C9EB65002AA9DD /* GifsStickersViewController+GiphyApi.swift */; };
+		96DE234324C9EB66002AA9DD /* GiphyApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE234124C9EB65002AA9DD /* GiphyApiManager.swift */; };
 		999EC8EDCFB0E706E0A8C2AF776439CB /* GifCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A89CD8A3C076ED6C32946B018D7A0919 /* GifCollectionViewCell.xib */; };
 		A9E70330524A80D4D04AF50A838666F5 /* SwiftyGif-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A5C6C5ACAFBC8B9203E4B922C20A18BE /* SwiftyGif-dummy.m */; };
 		AF6FF1855E227D3C93BB642FFB68EBB6 /* UIImageView+SwiftyGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE1B474ED6E866345B93E05B12D7CF /* UIImageView+SwiftyGif.swift */; };
@@ -140,8 +140,8 @@
 		8E869F1303037363048D6C7D933A3E41 /* UIImage+SwiftyGif.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+SwiftyGif.swift"; path = "SwiftyGif/UIImage+SwiftyGif.swift"; sourceTree = "<group>"; };
 		911E26DA328097D4864D2D1CBA6BBD38 /* iOSPhotoEditor-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "iOSPhotoEditor-prefix.pch"; sourceTree = "<group>"; };
 		93CCE9A273592BC9610CFDCDAE0C69B8 /* BackgroundViewController.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = BackgroundViewController.xib; path = "Photo Editor/Photo Editor/BackgroundViewController.xib"; sourceTree = "<group>"; };
-		96DE233824C9CD4A002AA9DD /* GiphyApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyApiManager.swift; sourceTree = "<group>"; };
-		96DE233A24C9D2A7002AA9DD /* GifsStickersViewController+GiphyApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GifsStickersViewController+GiphyApi.swift"; sourceTree = "<group>"; };
+		96DE234024C9EB65002AA9DD /* GifsStickersViewController+GiphyApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "GifsStickersViewController+GiphyApi.swift"; path = "Photo Editor/Photo Editor/GifsStickersViewController+GiphyApi.swift"; sourceTree = "<group>"; };
+		96DE234124C9EB65002AA9DD /* GiphyApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GiphyApiManager.swift; path = "Photo Editor/Photo Editor/GiphyApiManager.swift"; sourceTree = "<group>"; };
 		97974E5492E9530240FDFD6E36873BC7 /* gradient@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "gradient@3x.png"; path = "Photo Editor/Photo Editor/gradient@3x.png"; sourceTree = "<group>"; };
 		9A8AAC9130031AE3BF8316F661060B80 /* SwiftyGif-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyGif-umbrella.h"; sourceTree = "<group>"; };
 		9B2A0FCDE4E3B72F234396691DDB67E1 /* PhotoEditorViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhotoEditorViewController.swift; path = "Photo Editor/Photo Editor/PhotoEditorViewController.swift"; sourceTree = "<group>"; };
@@ -304,12 +304,13 @@
 				E22FD9DD3454F34A7520C93CCC086C9D /* Extensions.swift */,
 				A7277204B31A3E9E3AC72C62C5EED76F /* GifCollectionViewCell.swift */,
 				72D038FF00E902D68A78BC76662ECF63 /* GifsCollectionViewDelegate.swift */,
-				96DE233A24C9D2A7002AA9DD /* GifsStickersViewController+GiphyApi.swift */,
 				B69309B352ECDF56D519C88C1FB45AD2 /* GifsStickersViewController.swift */,
 				DFE4DF4A2A675976A31D7E94A4C80C98 /* GradientView.swift */,
 				01B6C5EE909D77A863DCD3B1EB2B41F3 /* ImageCollectionViewCell.swift */,
 				4EB0F6B2EC2CFD42751008EFDF4AF4CE /* ImageCollectionViewDelegate.swift */,
 				FCC4B1026C35853470E6E08C74AC0A2A /* PhotoEditor+BackgroundViewController.swift */,
+				96DE234024C9EB65002AA9DD /* GifsStickersViewController+GiphyApi.swift */,
+				96DE234124C9EB65002AA9DD /* GiphyApiManager.swift */,
 				2816DEE9765534892663C9F76A05C09F /* PhotoEditor+Controls.swift */,
 				A442D4EB150B70F2F8916E18967033AA /* PhotoEditor+Crop.swift */,
 				5EA9B2A35EE749F7C191578AD8A88376 /* PhotoEditor+Drawing.swift */,
@@ -325,7 +326,6 @@
 				3EEF7CE839170097C70DBB5D51E64F78 /* UIImage+Crop.swift */,
 				E2A11BAFD3F259BDB5A7B662193939A4 /* UIImage+Size.swift */,
 				2487CDA8775F68846E7107510A710F4F /* UIImageView+Alpha.swift */,
-				96DE233824C9CD4A002AA9DD /* GiphyApiManager.swift */,
 				F6ADFBC654DBC9D6F4E19BE5845B2D92 /* UIView+Image.swift */,
 				CD83C610144D7D6AC237A8C3105FD84B /* Pod */,
 				09B3A602993810B023288ACF26AC3377 /* Resources */,
@@ -591,7 +591,6 @@
 				5D9FCD5CC0ADBBC275C3E2EF54EBD93E /* ColorsCollectionViewDelegate.swift in Sources */,
 				6322F957D5C4A54001B9CCCA082B824E /* CropRectView.swift in Sources */,
 				2635F881E36426B64A73CC5899195160 /* CropView.swift in Sources */,
-				96DE233B24C9D2A7002AA9DD /* GifsStickersViewController+GiphyApi.swift in Sources */,
 				C56F8C33117B8F80787EFC20B88C97C3 /* CropViewController.swift in Sources */,
 				EFC7D1C773365D25D6628DC0E20EC86E /* Extensions.swift in Sources */,
 				10EFEC113FCE992DDD13661359F671CE /* GifCollectionViewCell.swift in Sources */,
@@ -604,7 +603,6 @@
 				1F5A942EE836DBBA2D43A07AFAE01320 /* PhotoEditor+BackgroundViewController.swift in Sources */,
 				4BCF3D99A7DEA5EF8BC483E9F200637A /* PhotoEditor+Controls.swift in Sources */,
 				663C31FCD02ABC1E4E81EEF10283B49C /* PhotoEditor+Crop.swift in Sources */,
-				96DE233924C9CD4A002AA9DD /* GiphyApiManager.swift in Sources */,
 				1B1FAB32836D85BB5DB4E6805E055748 /* PhotoEditor+Drawing.swift in Sources */,
 				93967B8A3D16904BE35610777A17A7E6 /* PhotoEditor+Font.swift in Sources */,
 				0810909B7ECE993D1043F0C05F12CD1A /* PhotoEditor+Gestures.swift in Sources */,
@@ -614,6 +612,8 @@
 				D7EA2070101579277A8371723E689603 /* PhotoEditorViewController.swift in Sources */,
 				6C561CEA17A95772119419087E096F15 /* Protocols.swift in Sources */,
 				7F11D5101375FBD3DCE09CE97186C58E /* ResizeControl.swift in Sources */,
+				96DE234224C9EB66002AA9DD /* GifsStickersViewController+GiphyApi.swift in Sources */,
+				96DE234324C9EB66002AA9DD /* GiphyApiManager.swift in Sources */,
 				65A7CB5B855865C548C15DB21A6BB2C3 /* StickerCollectionViewCell.swift in Sources */,
 				C40B5D731D922A546FD8B27930AE1A0F /* UIImage+Crop.swift in Sources */,
 				11D5E29CB9B8ABAA57E6451E28C7BDD7 /* UIImage+Size.swift in Sources */,
