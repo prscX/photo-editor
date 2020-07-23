@@ -8,38 +8,24 @@
 
 import UIKit
 
-struct GiphyGif: Decodable, Hashable {
-    let url: String
-    let height: String
-    let width: String
-}
-
-struct GiphyGifSize: Decodable, Hashable {
-    let downsized: GiphyGif
-}
-
-struct GiphyGifImages: Decodable, Hashable {
-    let images: GiphyGifSize
-}
-
-struct GiphyResponse: Decodable {
-    let data: [GiphyGifImages]
-}
 
 class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate {
-    
     @IBOutlet weak var holdView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var segmentedView: UISegmentedControl!
     
-    var collectioView: UICollectionView!
+    var stickersCollectionView: UICollectionView!
     var gifsCollectionView: UICollectionView!
     
     var gifsDelegate: GifsCollectionViewDelegate!
+    var stickersDelegate: GifsCollectionViewDelegate!
     
-    var stickers : [UIImage] = []
-    var gifs: [GiphyGif] = []
+    var gifs: [GiphyObject] = []
+    var stickers: [GiphyObject] = []
     var gifsStickersViewControllerDelegate : GifsStickersViewControllerDelegate?
+    
+    var gifsApiManager: GiphyApiManager!
+    var stickersApiManager: GiphyApiManager!
     
     let screenSize = UIScreen.main.bounds.size
     
@@ -54,12 +40,12 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
         return topPadding!
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadGiphy()
+        
+        initGiphy()
         configureCollectionViews()
+        
         scrollView.contentSize = CGSize(width: 2.0 * screenSize.width,
                                         height: scrollView.frame.size.height)
         
@@ -112,68 +98,54 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
         }
     }
     
-    func loadGiphy () {
-        let url = URL(string: "https://api.giphy.com/v1/gifs/trending?api_key=K60P8olEveFJVYWFp87IlgqT4CmXcMUe")!
+    func initGiphy () {
+        gifsApiManager = GiphyApiManager(apiType: GiphyType.gifs);
+        gifsApiManager.giphyApiManagerDelegate = self
+        gifsApiManager.fetchTrendingPage()
         
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            guard let data = data else { return }
-            let gifs: GiphyResponse = try! JSONDecoder().decode(GiphyResponse.self, from: data)
-            
-            var giphyGifs: [GiphyGif] = [];
-            
-            for image in gifs.data {
-                giphyGifs.append(image.images.downsized)
-            }
-            
-            self.gifsDelegate.setData(data: giphyGifs)
-            
-            DispatchQueue.main.async{
-                self.gifsCollectionView.reloadData()
-                self.gifsCollectionView.layoutIfNeeded()
-            }
-        }
-        
-        task.resume()
+        stickersApiManager = GiphyApiManager(apiType: GiphyType.stickers);
+        stickersApiManager.giphyApiManagerDelegate = self
+        stickersApiManager.fetchTrendingPage()
     }
     
     func configureCollectionViews() {
-        
         let frame = CGRect(x: 0,
                            y: 0,
                            width: UIScreen.main.bounds.width,
                            height: view.frame.height - 40)
         
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
-        let width = (CGFloat) ((screenSize.width - 30) / 2.0)
-        layout.itemSize = CGSize(width: width, height: 100)
+        let stickerslayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        stickerslayout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
         
-        collectioView = UICollectionView(frame: frame, collectionViewLayout: layout)
-        collectioView.backgroundColor = .clear
-        scrollView.addSubview(collectioView)
+        let width = (CGFloat) ((screenSize.width - 36) / 2)
+        stickerslayout.itemSize = CGSize(width: width, height: width)
+        stickersCollectionView = UICollectionView(frame: frame, collectionViewLayout: stickerslayout)
+        stickersCollectionView.backgroundColor = .clear
+        scrollView.addSubview(stickersCollectionView)
+        stickersDelegate = GifsCollectionViewDelegate()
         
-        collectioView.delegate = self
-        collectioView.dataSource = self
+        stickersDelegate.gifsStickersViewControllerDelegate = gifsStickersViewControllerDelegate
+        stickersCollectionView.delegate = stickersDelegate
+        stickersCollectionView.dataSource = stickersDelegate
         
-        collectioView.register(
-            UINib(nibName: "StickerCollectionViewCell", bundle: Bundle(for: StickerCollectionViewCell.self)),
-            forCellWithReuseIdentifier: "StickerCollectionViewCell")
+        stickersCollectionView.register(
+            UINib(nibName: "GifCollectionViewCell", bundle: Bundle(for: GifCollectionViewCell.self)),
+            forCellWithReuseIdentifier: "GifCollectionViewCell")
         
         //-----------------------------------
-        
-        let gifsFrame = CGRect(x: scrollView.frame.size.width,
+        let frameGifs = CGRect(x: scrollView.frame.size.width,
                                y: 0,
                                width: UIScreen.main.bounds.width,
                                height: view.frame.height - 40)
-        
         let gifslayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         gifslayout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
-    
-        gifsCollectionView = UICollectionView(frame: gifsFrame, collectionViewLayout: gifslayout)
+        gifslayout.itemSize = CGSize(width: width, height: width)
+        
+        gifsCollectionView = UICollectionView(frame: frameGifs, collectionViewLayout: gifslayout)
         gifsCollectionView.backgroundColor = .clear
         scrollView.addSubview(gifsCollectionView)
         gifsDelegate = GifsCollectionViewDelegate()
-        //        gifsDelegate.gifs = gifs
+        
         gifsDelegate.gifsStickersViewControllerDelegate = gifsStickersViewControllerDelegate
         gifsCollectionView.delegate = gifsDelegate
         gifsCollectionView.dataSource = gifsDelegate
@@ -204,10 +176,10 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectioView.frame = CGRect(x: 0,
-                                     y: 0,
-                                     width: UIScreen.main.bounds.width,
-                                     height: view.frame.height - 100)
+        stickersCollectionView.frame = CGRect(x: 0,
+                                              y: 0,
+                                              width: UIScreen.main.bounds.width,
+                                              height: view.frame.height - 100)
         
         gifsCollectionView.frame = CGRect(x: scrollView.frame.size.width,
                                           y: 0,
@@ -288,9 +260,6 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
         bluredView.frame = UIScreen.main.bounds
         view.insertSubview(bluredView, at: 0)
     }
-    
-    
-    
 }
 
 extension GifsStickersViewController: UIScrollViewDelegate {
@@ -303,36 +272,3 @@ extension GifsStickersViewController: UIScrollViewDelegate {
         }
     }
 }
-
-// MARK: - UICollectionViewDataSource
-extension GifsStickersViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return stickers.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        gifsStickersViewControllerDelegate?.didSelectSticker(image: stickers[indexPath.item])
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let identifier = "StickerCollectionViewCell"
-        let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! StickerCollectionViewCell
-        cell.stickerImage.image = stickers[indexPath.item]
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 4
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-}
-

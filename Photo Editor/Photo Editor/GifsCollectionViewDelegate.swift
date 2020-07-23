@@ -14,24 +14,24 @@ class GifsCollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollec
     
     let gifManager = SwiftyGifManager(memoryLimit:100)
     let width = (CGFloat) ((UIScreen.main.bounds.size.width - 30) / 2.0)
-    var gifs: [GiphyGif] = []
+    var data: [GiphyObject] = []
     
-    func setData(data: [GiphyGif]) {
-        gifs = data
+    func setData(data: [GiphyObject]) {
+        self.data = data
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let aspectRatio = CGFloat(Double(gifs[indexPath.item].height)! / Double(gifs[indexPath.item].width)!)
+        let aspectRatio = CGFloat(Double(data[indexPath.item].height!)! / Double(data[indexPath.item].width!)!)
         
         return CGSize(width: width, height: width * aspectRatio)
        }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return gifs.count
+        return data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        gifsStickersViewControllerDelegate?.didSelectGif(gif: gifs[indexPath.item].url, width: Int((collectionView.cellForItem(at: indexPath)?.frame.width)!), height: Int((collectionView.cellForItem(at: indexPath)?.frame.height)!))
+        gifsStickersViewControllerDelegate?.didSelectGif(gif: data[indexPath.item].url!, width: Int((collectionView.cellForItem(at: indexPath)?.frame.width)!), height: Int((collectionView.cellForItem(at: indexPath)?.frame.height)!))
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -42,7 +42,7 @@ class GifsCollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollec
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: "GifCollectionViewCell", for: indexPath) as! GifCollectionViewCell
         
         
-        if let url = URL.init(string: gifs[indexPath.item].url) {
+        if let url = URL.init(string: data[indexPath.item].url!) {
             let loader = UIActivityIndicatorView.init(style: .gray)
             cell.gifImageView.setGifFromURL(url, customLoader: loader)
         }

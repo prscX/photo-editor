@@ -73,3 +73,7 @@ protocol BackgroundViewControllerDelegate {
 protocol ColorDelegate {
     func didSelectColor(color: UIColor)
 }
+
+protocol GiphyApiManagerDelegate {
+    func onLoadData(data: [GiphyObject], type: GiphyType)
+}
