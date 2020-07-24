@@ -108,6 +108,9 @@ class GiphyApiManager {
     }
     
     func fetchTrendingPage() {
+        searchPhrase = ""
+        apiType = ApiType.trending
+        
         if let apiUrl = buildApiUrl() {
             let task = URLSession.shared.dataTask(with:apiUrl) {(data, response, error) in
                 guard let data = data else { return }

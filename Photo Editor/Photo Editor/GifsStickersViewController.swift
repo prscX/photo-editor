@@ -7,7 +7,7 @@
 //  Credit https://github.com/AhmedElassuty/IOS-BottomSheet
 
 import UIKit
-
+import CollectionViewWaterfallLayout
 
 class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var holdView: UIView!
@@ -83,13 +83,19 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
     }
     
     @IBAction func onSearchChanged(_ sender: UITextField) {
-        if (segmentedView.selectedSegmentIndex == 0) {
-            if let searchText = sender.text {
-                stickersApiManager.searchGif(phrase: searchText)
-            }
-        } else {
-            if let searchText = sender.text {
-                gifsApiManager.searchGif(phrase: searchText)
+        if let searchText = sender.text {
+            if !searchText.isEmpty {
+                if (segmentedView.selectedSegmentIndex == 0) {
+                    stickersApiManager.searchGif(phrase: searchText)
+                } else {
+                    gifsApiManager.searchGif(phrase: searchText)
+                }
+            } else {
+                if (segmentedView.selectedSegmentIndex == 0) {
+                    stickersApiManager.fetchTrendingPage()
+                } else {
+                    gifsApiManager.fetchTrendingPage()
+                }
             }
         }
     }
@@ -139,14 +145,11 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
         let frame = CGRect(x: 0,
                            y: 0,
                            width: UIScreen.main.bounds.width,
-                           height: view.frame.height - 135)
+                           height: scrollView.frame.height)
         
-        let stickerslayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        
+        let stickerslayout: CollectionViewWaterfallLayout = CollectionViewWaterfallLayout()
         stickerslayout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
         
-        let width = (CGFloat) ((screenSize.width - 36) / 2)
-        stickerslayout.itemSize = CGSize(width: width, height: width)
         
         stickersCollectionView = UICollectionView(frame: frame, collectionViewLayout: stickerslayout)
         stickersCollectionView.backgroundColor = .clear
@@ -165,11 +168,10 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
         let frameGifs = CGRect(x: scrollView.frame.size.width,
                                y: 0,
                                width: UIScreen.main.bounds.width,
-                               height: view.frame.height - 135)
-        let gifslayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+                               height: scrollView.frame.height)
         
+        let gifslayout: CollectionViewWaterfallLayout = CollectionViewWaterfallLayout()
         gifslayout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
-        gifslayout.itemSize = CGSize(width: width, height: width)
         
         gifsCollectionView = UICollectionView(frame: frameGifs, collectionViewLayout: gifslayout)
         gifsCollectionView.backgroundColor = .clear
@@ -217,12 +219,12 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
         stickersCollectionView.frame = CGRect(x: 0,
                                               y: 0,
                                               width: UIScreen.main.bounds.width,
-                                              height: view.frame.height - 140)
+                                              height: scrollView.frame.height)
         
         gifsCollectionView.frame = CGRect(x: scrollView.frame.size.width,
                                           y: 0,
                                           width: UIScreen.main.bounds.width,
-                                          height: view.frame.height - 140)
+                                          height: scrollView.frame.height)
         
         scrollView.contentSize = CGSize(width: 2.0 * screenSize.width,
                                         height: scrollView.frame.size.height)
