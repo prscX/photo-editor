@@ -52,7 +52,7 @@
 		8D262149C8113D1EC388C8F57C3F1478 /* ColorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30AA4B0C21FD49C3B18BD60A9519EA82 /* ColorCollectionViewCell.xib */; };
 		8F7250CB092D45B700DB0FE818895B0B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0264DDBA607D79A4658A36A4E89B4BBB /* Foundation.framework */; };
 		9340F10FD73B2A37601A8B60832BD51F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0264DDBA607D79A4658A36A4E89B4BBB /* Foundation.framework */; };
-		96DE234724CB09B7002AA9DD /* TouchableStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE234624CB09B7002AA9DD /* TouchableStackView.swift */; };
+		96DE234924CB256E002AA9DD /* TouchableStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE234824CB256E002AA9DD /* TouchableStackView.swift */; };
 		9B2B864C625449B4D6B848625C118582 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A0C187BC109F7D80CADC1C4ABD1BC7 /* Extensions.swift */; };
 		9CE8933C75C342EB6D97BE8031DC66A0 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98EE88DF1850F7B751B7FAFE53E67F7 /* Protocols.swift */; };
 		A2E0ECAE302E50E379A3AD150EE9E4B6 /* BackgroundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700BB4E209B9E4DB14E82159BFEB7DE8 /* BackgroundViewController.xib */; };
@@ -178,7 +178,7 @@
 		950C78B6CD37C89D2F6164FE3D8CA4C3 /* iOSPhotoEditor-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "iOSPhotoEditor-umbrella.h"; sourceTree = "<group>"; };
 		95C66EEF7E528416619A8945B289DE3F /* GradientView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GradientView.swift; path = "Photo Editor/Photo Editor/GradientView.swift"; sourceTree = "<group>"; };
 		967ECB4D9122E74B7780402619BF164B /* UIImage+Size.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+Size.swift"; path = "Photo Editor/Photo Editor/UIImage+Size.swift"; sourceTree = "<group>"; };
-		96DE234624CB09B7002AA9DD /* TouchableStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableStackView.swift; sourceTree = "<group>"; };
+		96DE234824CB256E002AA9DD /* TouchableStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TouchableStackView.swift; path = "Photo Editor/Photo Editor/TouchableStackView.swift"; sourceTree = "<group>"; };
 		98C917F77372A26CE416FC926B76E9D4 /* PhotoEditor+Gestures.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PhotoEditor+Gestures.swift"; path = "Photo Editor/Photo Editor/PhotoEditor+Gestures.swift"; sourceTree = "<group>"; };
 		9AD7EA07E7F5C92540521C05B33BD1BB /* PhotoEditor+Crop.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PhotoEditor+Crop.swift"; path = "Photo Editor/Photo Editor/PhotoEditor+Crop.swift"; sourceTree = "<group>"; };
 		9BC6A5B378B3BBCCE72B361AB3481521 /* StickerCollectionViewCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = StickerCollectionViewCell.xib; path = "Photo Editor/Photo Editor/StickerCollectionViewCell.xib"; sourceTree = "<group>"; };
@@ -367,6 +367,7 @@
 				A60B3268A6F366017CE093E6C24A18DD /* PhotoEditorViewController.swift */,
 				F98EE88DF1850F7B751B7FAFE53E67F7 /* Protocols.swift */,
 				B22C89F4FFBA7411E982328178C0AD63 /* ResizeControl.swift */,
+				96DE234824CB256E002AA9DD /* TouchableStackView.swift */,
 				A221A94FC03C26DC375E74886FE62CCB /* StickerCollectionViewCell.swift */,
 				D4A6BB27CF35BC9BF8821B940C26F96D /* UIImage+Crop.swift */,
 				967ECB4D9122E74B7780402619BF164B /* UIImage+Size.swift */,
@@ -375,7 +376,6 @@
 				ACE78A4F84E53FCBD4378BF00CF15D58 /* Pod */,
 				9D1A21B0D40CB850B1491B1C16449DB9 /* Resources */,
 				916C75E61304F515ED25693C7B06A9B2 /* Support Files */,
-				96DE234624CB09B7002AA9DD /* TouchableStackView.swift */,
 			);
 			name = iOSPhotoEditor;
 			path = ../..;
@@ -739,8 +739,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				03B6D237E16948EE9A04DF850F594267 /* CollectionViewWaterfallLayout-dummy.m in Sources */,
-				96DE234724CB09B7002AA9DD /* TouchableStackView.swift in Sources */,
 				67551064A06E18FD42E55C9EA4B3157A /* CollectionViewWaterfallLayout.swift in Sources */,
+				96DE234924CB256E002AA9DD /* TouchableStackView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
