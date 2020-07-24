@@ -11,6 +11,7 @@
             <connections>
                 <outlet property="holdView" destination="caC-0e-fET" id="k8K-lS-zd3"/>
                 <outlet property="scrollView" destination="389-Pb-g4p" id="MXL-UR-05e"/>
+                <outlet property="searchTextField" destination="LmG-Tw-Lp6" id="JrF-Kw-GFb"/>
                 <outlet property="segmentedView" destination="QxQ-jr-xdD" id="J3v-xl-qWQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="qnZ-uS-vhT"/>
             </connections>
@@ -20,11 +21,11 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="XW5-Il-2gL">
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="XW5-Il-2gL">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Sgy-xB-bRW">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="184"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6oF-YM-OfZ">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="12"/>
@@ -78,19 +79,43 @@
                                         <action selector="segmentedControlButtonClickAction:" destination="-1" eventType="valueChanged" id="SpZ-7h-6I7"/>
                                     </connections>
                                 </segmentedControl>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HGR-8C-Fnb">
+                                    <rect key="frame" x="0.0" y="128" width="375" height="16"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="16" id="0lR-4j-kL6"/>
+                                    </constraints>
+                                </view>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search GIPHY" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LmG-Tw-Lp6">
+                                    <rect key="frame" x="12" y="144" width="351" height="40"/>
+                                    <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="D6w-Qo-Dwf"/>
+                                    </constraints>
+                                    <color key="textColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <action selector="onSearchChanged:" destination="-1" eventType="editingChanged" id="GNe-0g-lM4"/>
+                                    </connections>
+                                </textField>
                             </subviews>
                             <constraints>
+                                <constraint firstItem="LmG-Tw-Lp6" firstAttribute="centerX" secondItem="Sgy-xB-bRW" secondAttribute="centerX" id="1Ko-ub-Xvi"/>
+                                <constraint firstItem="HGR-8C-Fnb" firstAttribute="width" secondItem="Sgy-xB-bRW" secondAttribute="width" id="7tR-W6-OWi"/>
                                 <constraint firstItem="72l-Pf-i7O" firstAttribute="leading" secondItem="Sgy-xB-bRW" secondAttribute="leading" constant="12" id="Gdo-60-4ae"/>
                                 <constraint firstItem="QxQ-jr-xdD" firstAttribute="leading" secondItem="Sgy-xB-bRW" secondAttribute="leading" constant="24" id="XcP-2v-BC7"/>
                                 <constraint firstItem="FFz-HG-EXZ" firstAttribute="leading" secondItem="Sgy-xB-bRW" secondAttribute="leading" id="boN-O8-w1P"/>
                                 <constraint firstAttribute="trailing" secondItem="QxQ-jr-xdD" secondAttribute="trailing" constant="24" id="sFo-j6-ryg"/>
                                 <constraint firstAttribute="trailing" secondItem="Sib-kD-Uen" secondAttribute="trailing" id="snU-rN-RTL"/>
+                                <constraint firstAttribute="trailing" secondItem="LmG-Tw-Lp6" secondAttribute="trailing" constant="12" id="soc-n6-4En"/>
+                                <constraint firstItem="LmG-Tw-Lp6" firstAttribute="leading" secondItem="Sgy-xB-bRW" secondAttribute="leading" constant="12" id="tHN-xJ-5oZ"/>
                                 <constraint firstItem="Sib-kD-Uen" firstAttribute="leading" secondItem="Sgy-xB-bRW" secondAttribute="leading" id="tJN-CB-n0c"/>
                                 <constraint firstAttribute="trailing" secondItem="FFz-HG-EXZ" secondAttribute="trailing" id="vMv-kK-8Co"/>
                             </constraints>
                         </stackView>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" directionalLockEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="389-Pb-g4p">
-                            <rect key="frame" x="0.0" y="152" width="375" height="515"/>
+                            <rect key="frame" x="0.0" y="196" width="375" height="471"/>
                         </scrollView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -24,4 +24,24 @@ extension GifsStickersViewController: GiphyApiManagerDelegate {
             }
         }
     }
+    
+    func onLoadMoreData(data: [GiphyObject], type: GiphyType) {
+         
+         if (type == GiphyType.gifs) {
+             self.gifsDelegate.insertData(data: data)
+             
+             DispatchQueue.main.async{
+                 self.gifsCollectionView.reloadData()
+                self.stickersCollectionView.layoutIfNeeded()
+                self.stickersCollectionView.layoutSubviews()
+             }
+         } else {
+             self.stickersDelegate.insertData(data: data)
+             
+             DispatchQueue.main.async{
+                 self.stickersCollectionView.reloadData()
+                self.stickersCollectionView.layoutIfNeeded()
+             }
+         }
+     }
 }

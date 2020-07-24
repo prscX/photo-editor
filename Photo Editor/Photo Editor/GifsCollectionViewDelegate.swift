@@ -20,11 +20,24 @@ class GifsCollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollec
         self.data = data
     }
     
+    func insertData(data: [GiphyObject]) {
+        self.data.append(contentsOf: data)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let lastSectionIndex = collectionView.numberOfSections - 1
+        let lastRowIndex = collectionView.numberOfItems(inSection: lastSectionIndex) - 1
+        
+        if indexPath.section == lastSectionIndex && indexPath.row == lastRowIndex {
+            gifsStickersViewControllerDelegate?.onLoadMore()
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let aspectRatio = CGFloat(Double(data[indexPath.item].height!)! / Double(data[indexPath.item].width!)!)
         
         return CGSize(width: width, height: width * aspectRatio)
-       }
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
@@ -51,10 +64,16 @@ class GifsCollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 4
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
+        let aspectRatio = CGFloat(Double(data[indexPath.item].height!)! / Double(data[indexPath.item].width!)!)
+        
+        return CGFloat(width * aspectRatio)
     }
 }

@@ -43,6 +43,9 @@ extension PhotoEditorViewController {
 }
 
 extension PhotoEditorViewController: GifsStickersViewControllerDelegate {
+    func onLoadMore() {
+        gifsStickersViewController!.loadMoreData()
+    }
     
     func didSelectGif(gif: String, width: Int, height: Int) {
         self.removeStickersView()

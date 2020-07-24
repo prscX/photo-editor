@@ -25,6 +25,9 @@
   "dependencies": {
     "SwiftyGif": [
 
+    ],
+    "CollectionViewWaterfallLayout": [
+
     ]
   },
   "swift_version": "4.2"

@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct Pagination: Decodable, Hashable {
+    let offset: Int
+}
+
 struct GiphyObject: Decodable, Hashable {
     let url: String?
     let height: String?
@@ -23,41 +27,57 @@ struct GiphyImages: Decodable, Hashable {
 
 struct GiphyResponse: Decodable {
     let data: [GiphyImages]
+    let pagination: Pagination?
 }
 
-enum GiphyType {
-    case gifs, stickers
+enum GiphyType: String {
+    case gifs = "gifs"
+    case stickers = "stickers"
+    
+    func toSring() -> String {
+        return self.rawValue
+    }
+}
+
+enum ApiType: String {
+    case trending = "trending"
+    case search = "search"
+    
+    func toSring() -> String {
+        return self.rawValue
+    }
 }
 
 class GiphyApiManager {
+    let offsetDefault = 25
+    private var giphyType: GiphyType = GiphyType.gifs
+    private var apiType: ApiType = ApiType.trending
+    private var page: Int = 0
+    private var searchTask: DispatchWorkItem?
+    private var offset = 0
+    private var searchPhrase = ""
     var giphyApiManagerDelegate: GiphyApiManagerDelegate!
-    var giphyType: GiphyType = GiphyType.gifs
-    var apiUrl: String = ""
-    var page: Int = 0
     
     init (apiType: GiphyType) {
-        if (apiType == GiphyType.gifs) {
-            apiUrl = "https://api.giphy.com/v1/gifs/trending?api_key=K60P8olEveFJVYWFp87IlgqT4CmXcMUe"
-        } else {
-            giphyType = GiphyType.stickers
-            apiUrl = "https://api.giphy.com/v1/stickers/trending?api_key=K60P8olEveFJVYWFp87IlgqT4CmXcMUe"
-        }
+        giphyType = apiType
     }
     
-    func fetchTrendingPage() {
-        let url = URL(string: apiUrl)!
+    private func search(search: String) {
+        apiType = ApiType.search
         
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            guard let data = data else { return }
+        if let apiUrl = buildApiUrl(search: search) {
+            let task = URLSession.shared.dataTask(with: apiUrl) {(data, response, error) in
+                guard let data = data else { return }
+                
+                let decodedData = self.decodeData(data: data)
+                self.giphyApiManagerDelegate.onLoadData(data: decodedData, type: self.giphyType)
+            }
             
-            let decodedData = self.decodeData(data: data)
-            self.giphyApiManagerDelegate.onLoadData(data: decodedData, type: self.giphyType)
+            task.resume()
         }
-        
-        task.resume()
     }
     
-    func decodeData(data: Data) -> [GiphyObject] {
+    private func decodeData(data: Data) -> [GiphyObject] {
         let gifs: GiphyResponse = try! JSONDecoder().decode(GiphyResponse.self, from: data)
         
         var giphyGifs: [GiphyObject] = []
@@ -71,5 +91,59 @@ class GiphyApiManager {
         }
         
         return giphyGifs
+    }
+    
+    private func buildApiUrl(search: String? = nil, offset: Int = 0) -> URL? {
+        var url = "https://api.giphy.com/v1/\(giphyType.toSring())/\(apiType.toSring())?api_key=K60P8olEveFJVYWFp87IlgqT4CmXcMUe"
+        
+        if let query = search {
+            url = url + "&q=" + query
+        }
+        
+        if offset > 0 {
+            url = url + "&offset=\(offset)"
+        }
+        
+        return URL(string: url)
+    }
+    
+    func fetchTrendingPage() {
+        if let apiUrl = buildApiUrl() {
+            let task = URLSession.shared.dataTask(with:apiUrl) {(data, response, error) in
+                guard let data = data else { return }
+                
+                let decodedData = self.decodeData(data: data)
+                self.giphyApiManagerDelegate.onLoadData(data: decodedData, type: self.giphyType)
+            }
+            
+            task.resume()
+        }
+    }
+    
+    func searchGif(phrase: String) {
+        searchPhrase = phrase
+        offset = 0
+        searchTask?.cancel()
+        
+        searchTask = DispatchWorkItem { [weak self] in
+            self?.search(search: phrase)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: searchTask!)
+    }
+    
+    func loadMore() {
+        offset += offsetDefault
+        
+        if let apiUrl = buildApiUrl(search: searchPhrase, offset: offset) {
+            let task = URLSession.shared.dataTask(with:apiUrl) {(data, response, error) in
+                guard let data = data else { return }
+                
+                let decodedData = self.decodeData(data: data)
+                self.giphyApiManagerDelegate.onLoadMoreData(data: decodedData, type: self.giphyType)
+            }
+            
+            task.resume()
+        }
     }
 }

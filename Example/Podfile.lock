@@ -1,5 +1,7 @@
 PODS:
+  - CollectionViewWaterfallLayout (0.5.0)
   - iOSPhotoEditor (0.5):
+    - CollectionViewWaterfallLayout
     - SwiftyGif
   - SwiftyGif (5.3.0)
 
@@ -8,6 +10,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - CollectionViewWaterfallLayout
     - SwiftyGif
 
 EXTERNAL SOURCES:
@@ -15,7 +18,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  iOSPhotoEditor: e2a425b276ea51a0399651191ed8334f586a8b4a
+  CollectionViewWaterfallLayout: 4399ba01be265fff4da1ed1d607130fe009780e4
+  iOSPhotoEditor: 02b62135c8b1c99fba503fb11f6394d10ee23888
   SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
 
 PODFILE CHECKSUM: ea06b1d06d0409ebea265171df70afd29804d0c8

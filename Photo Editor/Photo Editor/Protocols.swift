@@ -41,6 +41,10 @@ protocol GifsStickersViewControllerDelegate {
      */
     func didSelectGif(gif: String, width: Int, height: Int)
     /**
+     GifsStickersViewController on load more data
+    */
+    func onLoadMore()
+    /**
      GifsStickersViewController did Disappear
      */
     func stickersViewDidDisappear()
@@ -76,4 +80,5 @@ protocol ColorDelegate {
 
 protocol GiphyApiManagerDelegate {
     func onLoadData(data: [GiphyObject], type: GiphyType)
+    func onLoadMoreData(data: [GiphyObject], type: GiphyType)
 }
