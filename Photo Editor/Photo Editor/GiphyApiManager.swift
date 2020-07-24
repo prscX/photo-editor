@@ -104,7 +104,7 @@ class GiphyApiManager {
             url = url + "&offset=\(offset)"
         }
         
-        return URL(string: url)
+        return URL(string: url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
     }
     
     func fetchTrendingPage() {

@@ -11,17 +11,25 @@ import UIKit
 
 extension PhotoEditorViewController {
     
+    @objc func keyboardWillShow(notification: NSNotification) {
+           if isTyping {
+               doneButton.isHidden = false
+           }
+       }
+    
     @objc func keyboardDidShow(notification: NSNotification) {
         if isTyping {
             doneButton.isHidden = false
             colorPickerView.isHidden = false
-            hideToolbar(hide: true)
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         isTyping = false
         doneButton.isHidden = true
+    }
+    
+    @objc func keyboardDidHide(notification: NSNotification) {
         hideToolbar(hide: false)
     }
     

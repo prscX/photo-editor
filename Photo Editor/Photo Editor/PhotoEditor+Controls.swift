@@ -54,6 +54,7 @@ extension PhotoEditorViewController {
     }
     
     @IBAction func textButtonTapped(_ sender: Any) {
+        hideToolbar(hide: true)
         // For V1 only one text is available, to use multiple texts remove if / else case
         if (activeTextView == nil || !self.canvasImageView.subviews.contains(activeTextView!)) {
             isTyping = true
@@ -61,7 +62,7 @@ extension PhotoEditorViewController {
                                                     width: UIScreen.main.bounds.width, height: 30))
             
             textView.textAlignment = .center
-            textView.font = UIFont(name: "Helvetica", size: 30)
+            textView.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 30)
             textView.textColor = textColor
             textView.layer.shadowColor = UIColor.black.cgColor
             textView.layer.shadowOffset = CGSize(width: 1.0, height: 0.0)
@@ -121,6 +122,29 @@ extension PhotoEditorViewController {
     
     @IBAction func backgroundButtonTapper(_ sender: Any) {
         addBackgroundViewController()
+    }
+    
+    @IBAction func onStylePressed(sender: UIButton) {
+        font1Button.setTitleColor(UIColor.init(hexString: "#D0D0D0"), for: .normal)
+        font2Button.setTitleColor(UIColor.init(hexString: "#D0D0D0"), for: .normal)
+        font3Button.setTitleColor(UIColor.init(hexString: "#D0D0D0"), for: .normal)
+        font4Button.setTitleColor(UIColor.init(hexString: "#D0D0D0"), for: .normal)
+        
+        if (sender.tag ==  0) {
+            font1Button.setTitleColor(UIColor.init(hexString: "#646464"), for: .normal)
+            lastTextViewFont = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(Int(textSizeSlider.value)))
+        } else if (sender.tag ==  1) {
+            font2Button.setTitleColor(UIColor.init(hexString: "#646464"), for: .normal)
+            lastTextViewFont = UIFont(name: "AmericanTypewriter", size: CGFloat(Int(textSizeSlider.value)))
+        }else if (sender.tag ==  2) {
+            font3Button.setTitleColor(UIColor.init(hexString: "#646464"), for: .normal)
+            lastTextViewFont = UIFont(name: "Arial-BoldMT", size: CGFloat(Int(textSizeSlider.value)))
+        } else if (sender.tag ==  3) {
+            font4Button.setTitleColor(UIColor.init(hexString: "#646464"), for: .normal)
+            lastTextViewFont = UIFont(name: "BradleyHandITCTT-Bold", size: CGFloat(Int(textSizeSlider.value)))
+        }
+        
+        activeTextView?.font = lastTextViewFont
     }
     
     //MAKR: helper methods
