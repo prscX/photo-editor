@@ -45,30 +45,37 @@ extension PhotoEditorViewController : UIGestureRecognizerDelegate  {
      If it's a UITextView will make the font bigger so it doen't look pixlated
      */
     @objc func pinchGesture(_ recognizer: UIPinchGestureRecognizer) {
-        if let view = recognizer.view {
-            if view is UITextView {
-                let textView = view as! UITextView
+        // For V1 only gifs and stickers can be scaled
+        if recognizer.view is UIImageView {
+            if let view = recognizer.view {
+                //            if view is UITextView {
+                //                let textView = view as! UITextView
+                //
+                //                if textView.font!.pointSize * recognizer.scale < 90 {
+                //                    let font = UIFont(name: textView.font!.fontName, size: textView.font!.pointSize * recognizer.scale)
+                //                    textView.font = font
+                //                    let sizeToFit = textView.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width,
+                //                                                                 height:CGFloat.greatestFiniteMagnitude))
+                //                    textView.bounds.size = CGSize(width: textView.intrinsicContentSize.width,
+                //                                                  height: sizeToFit.height)
+                //                } else {
+                //                    let sizeToFit = textView.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width,
+                //                                                                 height:CGFloat.greatestFiniteMagnitude))
+                //                    textView.bounds.size = CGSize(width: textView.intrinsicContentSize.width,
+                //                                                  height: sizeToFit.height)
+                //                }
+                //
+                //
+                //                textView.setNeedsDisplay()
+                //            } else {
+                let transform:CGAffineTransform = view.transform.scaledBy(x: recognizer.scale, y: recognizer.scale)
                 
-                if textView.font!.pointSize * recognizer.scale < 90 {
-                    let font = UIFont(name: textView.font!.fontName, size: textView.font!.pointSize * recognizer.scale)
-                    textView.font = font
-                    let sizeToFit = textView.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width,
-                                                                 height:CGFloat.greatestFiniteMagnitude))
-                    textView.bounds.size = CGSize(width: textView.intrinsicContentSize.width,
-                                                  height: sizeToFit.height)
-                } else {
-                    let sizeToFit = textView.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width,
-                                                                 height:CGFloat.greatestFiniteMagnitude))
-                    textView.bounds.size = CGSize(width: textView.intrinsicContentSize.width,
-                                                  height: sizeToFit.height)
+                if (scale(from: view.transform) < 10 || scale(from: view.transform) > scale(from: transform)) {
+                    view.transform = transform
                 }
-                
-                
-                textView.setNeedsDisplay()
-            } else {
-                view.transform = view.transform.scaledBy(x: recognizer.scale, y: recognizer.scale)
+                //            }
+                recognizer.scale = 1
             }
-            recognizer.scale = 1
         }
     }
     
@@ -76,9 +83,12 @@ extension PhotoEditorViewController : UIGestureRecognizerDelegate  {
      UIRotationGestureRecognizer - Rotating Objects
      */
     @objc func rotationGesture(_ recognizer: UIRotationGestureRecognizer) {
-        if let view = recognizer.view {
-            view.transform = view.transform.rotated(by: recognizer.rotation)
-            recognizer.rotation = 0
+        // For V1 only gifs and stickers can be scaled
+        if recognizer.view is UIImageView {
+            if let view = recognizer.view {
+                view.transform = view.transform.rotated(by: recognizer.rotation)
+                recognizer.rotation = 0
+            }
         }
     }
     
@@ -160,7 +170,7 @@ extension PhotoEditorViewController : UIGestureRecognizerDelegate  {
      delete the view if it's inside the delete view
      Snap the view back if it's out of the canvas
      */
-
+    
     func moveView(view: UIView, recognizer: UIPanGestureRecognizer)  {
         
         hideToolbar(hide: true)
@@ -168,7 +178,7 @@ extension PhotoEditorViewController : UIGestureRecognizerDelegate  {
         
         view.superview?.bringSubviewToFront(view)
         let pointToSuperView = recognizer.location(in: self.view)
-
+        
         view.center = CGPoint(x: view.center.x + recognizer.translation(in: canvasImageView).x,
                               y: view.center.y + recognizer.translation(in: canvasImageView).y)
         
@@ -233,5 +243,9 @@ extension PhotoEditorViewController : UIGestureRecognizerDelegate  {
             }
         }
         return imageviews
+    }
+    
+    func scale(from transform: CGAffineTransform) -> Double {
+        return sqrt(Double(transform.a * transform.a + transform.c * transform.c))
     }
 }
