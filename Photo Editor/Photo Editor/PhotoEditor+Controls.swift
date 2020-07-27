@@ -29,6 +29,10 @@ extension PhotoEditorViewController {
     //MARK: Top Toolbar
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
+        if(self.isTyping) {
+            closeTextTool()
+        }
+        
         let refreshAlert = UIAlertController(title: "Abandon your Expression", message: "Leaving mid-edit just deletes your in-progress Expression.", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { (action: UIAlertAction!) in
@@ -41,6 +45,7 @@ extension PhotoEditorViewController {
         }))
         
         present(refreshAlert, animated: true, completion: nil)
+        
     }
     
     @IBAction func cropButtonTapped(_ sender: UIButton) {
@@ -68,12 +73,7 @@ extension PhotoEditorViewController {
     }    
     
     @IBAction func doneButtonTapped(_ sender: Any) {
-        view.endEditing(true)
-        doneButton.isHidden = true
-        colorPickerView.isHidden = true
-        canvasImageView.isUserInteractionEnabled = true
-        hideToolbar(hide: false)
-        isDrawing = false
+        closeTextTool()
     }
     
     //MARK: Bottom Toolbar
@@ -140,6 +140,15 @@ extension PhotoEditorViewController {
         let alert = UIAlertController(title: "Image Saved", message: "Image successfully saved to Photos library", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func closeTextTool () {
+        view.endEditing(true)
+        doneButton.isHidden = true
+        colorPickerView.isHidden = true
+        canvasImageView.isUserInteractionEnabled = true
+        hideToolbar(hide: false)
+        isDrawing = false
     }
     
     func openTextTool () {
