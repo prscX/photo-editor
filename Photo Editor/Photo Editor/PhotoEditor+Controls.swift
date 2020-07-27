@@ -29,8 +29,18 @@ extension PhotoEditorViewController {
     //MARK: Top Toolbar
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
-        photoEditorDelegate?.canceledEditing()
-        self.dismiss(animated: true, completion: nil)
+        let refreshAlert = UIAlertController(title: "Abandon your Expression", message: "Leaving mid-edit just deletes your in-progress Expression.", preferredStyle: UIAlertController.Style.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { (action: UIAlertAction!) in
+            self.photoEditorDelegate?.canceledEditing()
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+            refreshAlert.dismiss(animated: true, completion: nil)
+        }))
+        
+        present(refreshAlert, animated: true, completion: nil)
     }
     
     @IBAction func cropButtonTapped(_ sender: UIButton) {
