@@ -12,7 +12,6 @@ import UIKit
 extension PhotoEditorViewController {
     func addGifsStickersViewController() {
         gifsStickersVCIsVisible = true
-        self.canvasImageView.isUserInteractionEnabled = false
         gifsStickersViewController.gifsStickersViewControllerDelegate = self
         
         self.addChild(gifsStickersViewController)
