@@ -129,6 +129,7 @@ public final class PhotoEditorViewController: UIViewController {
         
         backgroundViewController = BackgroundViewController(nibName: "BackgroundViewController", bundle: Bundle(for: BackgroundViewController.self))
         hideControls()
+        openTextTool()
     }
     
     @IBAction func slider(_ sender: Any) {
@@ -137,7 +138,7 @@ public final class PhotoEditorViewController: UIViewController {
             textView.font = lastTextViewFont
             let sizeToFit = textView.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width, height:CGFloat.greatestFiniteMagnitude))
             
-            textView.bounds.size = CGSize(width: sizeToFit.width,
+            textView.bounds.size = CGSize(width: UIScreen.main.bounds.size.width,
                                           height: sizeToFit.height)
             textView.setNeedsDisplay()
         }

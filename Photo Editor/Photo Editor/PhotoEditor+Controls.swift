@@ -64,30 +64,7 @@ extension PhotoEditorViewController {
     }
     
     @IBAction func textButtonTapped(_ sender: Any) {
-        hideToolbar(hide: true)
-        // For V1 only one text is available, to use multiple texts remove if / else case
-        if (activeTextView == nil || !self.canvasImageView.subviews.contains(activeTextView!)) {
-            isTyping = true
-            let textView = UITextView(frame: CGRect(x: 0, y: canvasImageView.center.y,
-                                                    width: UIScreen.main.bounds.width, height: 30))
-            
-            textView.textAlignment = .center
-            textView.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 30)
-            textView.textColor = textColor
-            textView.layer.shadowColor = UIColor.black.cgColor
-            textView.layer.shadowOffset = CGSize(width: 1.0, height: 0.0)
-            textView.layer.shadowOpacity = 0.2
-            textView.layer.shadowRadius = 1.0
-            textView.layer.backgroundColor = UIColor.clear.cgColor
-            textView.autocorrectionType = .no
-            textView.isScrollEnabled = false
-            textView.delegate = self
-            self.canvasImageView.addSubview(textView)
-            addGestures(view: textView)
-            textView.becomeFirstResponder()
-        } else {
-            activeTextView?.becomeFirstResponder()
-        }
+        openTextTool()
     }    
     
     @IBAction func doneButtonTapped(_ sender: Any) {
@@ -163,6 +140,33 @@ extension PhotoEditorViewController {
         let alert = UIAlertController(title: "Image Saved", message: "Image successfully saved to Photos library", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func openTextTool () {
+        hideToolbar(hide: true)
+        // For V1 only one text is available, to use multiple texts remove if / else case
+        if (activeTextView == nil || !self.canvasImageView.subviews.contains(activeTextView!)) {
+            isTyping = true
+            let textView = UITextView(frame: CGRect(x: 0, y: canvasImageView.center.y,
+                                                    width: UIScreen.main.bounds.width, height: 30))
+            
+            textView.textAlignment = .center
+            textView.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 30)
+            textView.textColor = textColor
+            textView.layer.shadowColor = UIColor.black.cgColor
+            textView.layer.shadowOffset = CGSize(width: 1.0, height: 0.0)
+            textView.layer.shadowOpacity = 0.2
+            textView.layer.shadowRadius = 1.0
+            textView.layer.backgroundColor = UIColor.clear.cgColor
+            textView.autocorrectionType = .no
+            textView.isScrollEnabled = false
+            textView.delegate = self
+            self.canvasImageView.addSubview(textView)
+            addGestures(view: textView)
+            textView.becomeFirstResponder()
+        } else {
+            activeTextView?.becomeFirstResponder()
+        }
     }
     
     func hideControls() {

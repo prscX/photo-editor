@@ -115,7 +115,7 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
             }
         }
         
-        onPageChange()
+        onPageChange(page: sender.selectedSegmentIndex)
     }
     
     func initSearchField () {
@@ -136,8 +136,13 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
         stickersApiManager.fetchTrendingPage()
     }
     
-    func onPageChange () {
-        searchTextField.text = ""
+    func onPageChange (page: Int) {
+        if (page == 0) {
+            searchTextField.text = stickersApiManager.getSearchPhrase()
+        } else {
+            searchTextField.text = gifsApiManager.getSearchPhrase()
+        }
+        
         searchTextField.endEditing(true)
     }
     
@@ -310,7 +315,7 @@ extension GifsStickersViewController: UIScrollViewDelegate {
             let pageFraction = scrollView.contentOffset.x / pageWidth
             segmentedView.selectedSegmentIndex = Int(round(pageFraction))
             
-            onPageChange()
+            onPageChange(page: Int(round(pageFraction)))
         }
     }
 }

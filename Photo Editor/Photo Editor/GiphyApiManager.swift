@@ -107,6 +107,10 @@ class GiphyApiManager {
         return URL(string: url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
     }
     
+    func getSearchPhrase() -> String {
+        return searchPhrase;
+    }
+    
     func fetchTrendingPage() {
         searchPhrase = ""
         apiType = ApiType.trending
