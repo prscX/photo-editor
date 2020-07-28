@@ -84,18 +84,16 @@ class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate 
     
     @IBAction func onSearchChanged(_ sender: UITextField) {
         if let searchText = sender.text {
-            if !searchText.isEmpty {
-                if (segmentedView.selectedSegmentIndex == 0) {
-                    stickersApiManager.searchGif(phrase: searchText)
-                } else {
-                    gifsApiManager.searchGif(phrase: searchText)
-                }
+            if (segmentedView.selectedSegmentIndex == 0) {
+                stickersApiManager.searchGif(phrase: searchText)
             } else {
-                if (segmentedView.selectedSegmentIndex == 0) {
-                    stickersApiManager.fetchTrendingPage()
-                } else {
-                    gifsApiManager.fetchTrendingPage()
-                }
+                gifsApiManager.searchGif(phrase: searchText)
+            }
+        } else {
+            if (segmentedView.selectedSegmentIndex == 0) {
+                stickersApiManager.fetchTrendingPage()
+            } else {
+                gifsApiManager.fetchTrendingPage()
             }
         }
     }

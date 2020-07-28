@@ -71,6 +71,7 @@ extension PhotoEditorViewController: GifsStickersViewControllerDelegate {
                 self.canvasImageView.addSubview(image)
                 addGestures(view: image)
                 gifsImages.append(image)
+                gifsSources.append(GifImage(image: image, url: gif))
             }
         }
     }

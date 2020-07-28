@@ -102,9 +102,11 @@ extension PhotoEditorViewController {
     }
     
     @IBAction func continueButtonPressed(_ sender: Any) {
-        let image = self.canvasView.toImage()
-        photoEditorDelegate?.doneEditing(image: image)
-        self.dismiss(animated: true, completion: nil)
+//        let image = self.canvasView.toImage()
+//        photoEditorDelegate?.doneEditing(image: image)
+//        self.dismiss(animated: true, completion: nil)
+        
+        exportExpression()
     }
     
     @IBAction func backgroundButtonTapper(_ sender: Any) {

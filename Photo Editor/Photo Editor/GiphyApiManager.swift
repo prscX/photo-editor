@@ -94,6 +94,10 @@ class GiphyApiManager {
     }
     
     private func buildApiUrl(search: String? = nil, offset: Int = 0) -> URL? {
+        if (search == nil || search!.isEmpty) {
+            apiType = ApiType.trending
+        }
+        
         var url = "https://api.giphy.com/v1/\(giphyType.toSring())/\(apiType.toSring())?api_key=K60P8olEveFJVYWFp87IlgqT4CmXcMUe"
         
         if let query = search {
@@ -103,7 +107,7 @@ class GiphyApiManager {
         if offset > 0 {
             url = url + "&offset=\(offset)"
         }
-        
+        print(url)
         return URL(string: url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
     }
     
@@ -136,7 +140,7 @@ class GiphyApiManager {
             self?.search(search: phrase)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: searchTask!)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75, execute: searchTask!)
     }
     
     func loadMore() {

@@ -71,6 +71,7 @@ public final class PhotoEditorViewController: UIViewController {
     // list of controls to be hidden
     @objc public var hiddenControls : [NSString] = []
     
+    var imageBgUrl: String? = nil
     var backgroundVCIsVisible = false
     var gifsStickersVCIsVisible = false
     var drawColor: UIColor = UIColor.black
@@ -86,6 +87,7 @@ public final class PhotoEditorViewController: UIViewController {
     var imageViewToPan: UIImageView?
     var isTyping: Bool = false
     var gifsImages: [UIImageView] = []
+    var gifsSources: [GifImage] = []
     
     var gifsStickersViewController: GifsStickersViewController!
     var backgroundViewController: BackgroundViewController!
@@ -116,14 +118,14 @@ public final class PhotoEditorViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow),
                                                name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-        name: UIResponder.keyboardWillShowNotification, object: nil)
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide),
                                                name: UIResponder.keyboardDidHideNotification, object: nil)
         NotificationCenter.default.addObserver(self,selector: #selector(keyboardWillChangeFrame(_:)),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-
+        
         configureCollectionView()
         gifsStickersViewController = GifsStickersViewController(nibName: "GifsStickersViewController", bundle: Bundle(for: GifsStickersViewController.self))
         
@@ -176,10 +178,13 @@ public final class PhotoEditorViewController: UIViewController {
     
     func setBackgroundColor(color: String) {
         self.imageBg.image = nil
+        self.imageBgUrl = nil
         self.imageBg.backgroundColor = UIColor(hexString: color)
     }
     
     func setBackgroundImage(image: String) {
+        imageBgUrl = image
+        
         DispatchQueue.global().async { [weak self] in
             if let data = try? Data(contentsOf: URL(string: image)!) {
                 if let image = UIImage(data: data) {
