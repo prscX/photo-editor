@@ -12,7 +12,7 @@ import CollectionViewWaterfallLayout
 class GifsCollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, CollectionViewWaterfallLayoutDelegate {
     var gifsStickersViewControllerDelegate : GifsStickersViewControllerDelegate?
     
-    let gifManager = SwiftyGifManager(memoryLimit:100)
+    let gifManager = SwiftyGifManager(memoryLimit:200)
     let width = (CGFloat) ((UIScreen.main.bounds.size.width - 30) / 2.0)
     var data: [GiphyObject] = []
     

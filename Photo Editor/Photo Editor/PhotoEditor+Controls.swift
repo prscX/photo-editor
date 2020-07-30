@@ -29,8 +29,23 @@ extension PhotoEditorViewController {
     //MARK: Top Toolbar
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
-        photoEditorDelegate?.canceledEditing()
-        self.dismiss(animated: true, completion: nil)
+        if(self.isTyping) {
+            closeTextTool()
+        }
+        
+        let refreshAlert = UIAlertController(title: "Abandon your Expression", message: "Leaving mid-edit just deletes your in-progress Expression.", preferredStyle: UIAlertController.Style.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { (action: UIAlertAction!) in
+            self.photoEditorDelegate?.canceledEditing()
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+            refreshAlert.dismiss(animated: true, completion: nil)
+        }))
+        
+        present(refreshAlert, animated: true, completion: nil)
+        
     }
     
     @IBAction func cropButtonTapped(_ sender: UIButton) {
@@ -54,38 +69,11 @@ extension PhotoEditorViewController {
     }
     
     @IBAction func textButtonTapped(_ sender: Any) {
-        // For V1 only one text is available, to use multiple texts remove if / else case
-        if (activeTextView == nil || !self.canvasImageView.subviews.contains(activeTextView!)) {
-            isTyping = true
-            let textView = UITextView(frame: CGRect(x: 0, y: canvasImageView.center.y,
-                                                    width: UIScreen.main.bounds.width, height: 30))
-            
-            textView.textAlignment = .center
-            textView.font = UIFont(name: "Helvetica", size: 30)
-            textView.textColor = textColor
-            textView.layer.shadowColor = UIColor.black.cgColor
-            textView.layer.shadowOffset = CGSize(width: 1.0, height: 0.0)
-            textView.layer.shadowOpacity = 0.2
-            textView.layer.shadowRadius = 1.0
-            textView.layer.backgroundColor = UIColor.clear.cgColor
-            textView.autocorrectionType = .no
-            textView.isScrollEnabled = false
-            textView.delegate = self
-            self.canvasImageView.addSubview(textView)
-            addGestures(view: textView)
-            textView.becomeFirstResponder()
-        } else {
-            activeTextView?.becomeFirstResponder()
-        }
+        openTextTool()
     }    
     
     @IBAction func doneButtonTapped(_ sender: Any) {
-        view.endEditing(true)
-        doneButton.isHidden = true
-        colorPickerView.isHidden = true
-        canvasImageView.isUserInteractionEnabled = true
-        hideToolbar(hide: false)
-        isDrawing = false
+        closeTextTool()
     }
     
     //MARK: Bottom Toolbar
@@ -124,12 +112,71 @@ extension PhotoEditorViewController {
         addBackgroundViewController()
     }
     
+    @IBAction func onStylePressed(sender: UIButton) {
+        font1Button.setTitleColor(UIColor.init(hexString: "#D0D0D0"), for: .normal)
+        font2Button.setTitleColor(UIColor.init(hexString: "#D0D0D0"), for: .normal)
+        font3Button.setTitleColor(UIColor.init(hexString: "#D0D0D0"), for: .normal)
+        font4Button.setTitleColor(UIColor.init(hexString: "#D0D0D0"), for: .normal)
+        
+        if (sender.tag ==  0) {
+            font1Button.setTitleColor(UIColor.init(hexString: "#646464"), for: .normal)
+            lastTextViewFont = UIFont(name: "AppleSDGothicNeo-Regular", size: CGFloat(Int(textSizeSlider.value)))
+        } else if (sender.tag ==  1) {
+            font2Button.setTitleColor(UIColor.init(hexString: "#646464"), for: .normal)
+            lastTextViewFont = UIFont(name: "AmericanTypewriter", size: CGFloat(Int(textSizeSlider.value)))
+        }else if (sender.tag ==  2) {
+            font3Button.setTitleColor(UIColor.init(hexString: "#646464"), for: .normal)
+            lastTextViewFont = UIFont(name: "Arial-BoldMT", size: CGFloat(Int(textSizeSlider.value)))
+        } else if (sender.tag ==  3) {
+            font4Button.setTitleColor(UIColor.init(hexString: "#646464"), for: .normal)
+            lastTextViewFont = UIFont(name: "BradleyHandITCTT-Bold", size: CGFloat(Int(textSizeSlider.value)))
+        }
+        
+        activeTextView?.font = lastTextViewFont
+    }
+    
     //MAKR: helper methods
     
     @objc func image(_ image: UIImage, withPotentialError error: NSErrorPointer, contextInfo: UnsafeRawPointer) {
         let alert = UIAlertController(title: "Image Saved", message: "Image successfully saved to Photos library", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func closeTextTool () {
+        view.endEditing(true)
+        doneButton.isHidden = true
+        colorPickerView.isHidden = true
+        canvasImageView.isUserInteractionEnabled = true
+        hideToolbar(hide: false)
+        isDrawing = false
+    }
+    
+    func openTextTool () {
+        hideToolbar(hide: true)
+        // For V1 only one text is available, to use multiple texts remove if / else case
+        if (activeTextView == nil || !self.canvasImageView.subviews.contains(activeTextView!)) {
+            isTyping = true
+            let textView = UITextView(frame: CGRect(x: 0, y: canvasImageView.center.y,
+                                                    width: UIScreen.main.bounds.width, height: 30))
+            
+            textView.textAlignment = .center
+            textView.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 30)
+            textView.textColor = textColor
+            textView.layer.shadowColor = UIColor.black.cgColor
+            textView.layer.shadowOffset = CGSize(width: 1.0, height: 0.0)
+            textView.layer.shadowOpacity = 0.2
+            textView.layer.shadowRadius = 1.0
+            textView.layer.backgroundColor = UIColor.clear.cgColor
+            textView.autocorrectionType = .no
+            textView.isScrollEnabled = false
+            textView.delegate = self
+            self.canvasImageView.addSubview(textView)
+            addGestures(view: textView)
+            textView.becomeFirstResponder()
+        } else {
+            activeTextView?.becomeFirstResponder()
+        }
     }
     
     func hideControls() {

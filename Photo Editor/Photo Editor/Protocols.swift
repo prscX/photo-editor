@@ -33,10 +33,6 @@ import UIKit
  */
 protocol GifsStickersViewControllerDelegate {
     /**
-     - Parameter view: selected sticker from GifsStickersViewController
-     */
-    func didSelectSticker(image: UIImage)
-    /**
      - Parameter image: selected Gif from GifsStickersViewController
      */
     func didSelectGif(gif: String, width: Int, height: Int)

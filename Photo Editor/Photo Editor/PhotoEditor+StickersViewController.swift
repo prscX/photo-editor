@@ -12,7 +12,6 @@ import UIKit
 extension PhotoEditorViewController {
     func addGifsStickersViewController() {
         gifsStickersVCIsVisible = true
-        self.canvasImageView.isUserInteractionEnabled = false
         gifsStickersViewController.gifsStickersViewControllerDelegate = self
         
         self.addChild(gifsStickersViewController)
@@ -50,33 +49,30 @@ extension PhotoEditorViewController: GifsStickersViewControllerDelegate {
     func didSelectGif(gif: String, width: Int, height: Int) {
         self.removeStickersView()
         
+        var imageView: UIImageView? = nil
+        
+        if (!gifsImages.isEmpty &&  gifsImages.count > 4) {
+            imageView = gifsImages[gifsImages.count - 1]
+        } else {
+            imageView = UIImageView()
+        }
         
         let loader = UIActivityIndicatorView.init(style: .gray)
         
-        let imageView = UIImageView()
-        imageView.setGifFromURL(URL.init(string: gif)!, customLoader: loader)
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame.size = CGSize(width: width, height: height)
-        imageView.center = canvasImageView.center
-        imageView.layer.cornerRadius = 10
-        imageView.clipsToBounds = true
-        
-        self.canvasImageView.addSubview(imageView)
-        //Gestures
-        addGestures(view: imageView)
-    }
-    
-    func didSelectSticker(image: UIImage) {
-        self.removeStickersView()
-        
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame.size = CGSize(width: 150, height: 150)
-        imageView.center = canvasImageView.center
-        
-        self.canvasImageView.addSubview(imageView)
-        //Gestures
-        addGestures(view: imageView)
+        if let image = imageView {
+            image.setGifFromURL(URL.init(string: gif)!, customLoader: loader)
+            image.contentMode = .scaleAspectFit
+            image.frame.size = CGSize(width: width, height: height)
+            image.center = canvasImageView.center
+            image.layer.cornerRadius = 10
+            image.clipsToBounds = true
+            
+            if (!gifsImages.contains(image)) {
+                self.canvasImageView.addSubview(image)
+                addGestures(view: image)
+                gifsImages.append(image)
+            }
+        }
     }
     
     func stickersViewDidDisappear() {
@@ -95,19 +91,17 @@ extension PhotoEditorViewController: GifsStickersViewControllerDelegate {
         panGesture.delegate = self
         view.addGestureRecognizer(panGesture)
         
-        // For v1 pinch is disabled
-        //        let pinchGesture = UIPinchGestureRecognizer(target: self,
-        //                                                    action: #selector(PhotoEditorViewController.pinchGesture))
-        //        pinchGesture.delegate = self
         
-        //view.addGestureRecognizer(pinchGesture)
+        let pinchGesture = UIPinchGestureRecognizer(target: self,
+                                                    action: #selector(PhotoEditorViewController.pinchGesture))
+        pinchGesture.delegate = self
+        view.addGestureRecognizer(pinchGesture)
         
-        //For v1 rotation is disabled
-        //        let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self,
-        //                                                                    action:#selector(PhotoEditorViewController.rotationGesture) )
-        //        rotationGestureRecognizer.delegate = self
         
-        //        view.addGestureRecognizer(rotationGestureRecognizer)
+        let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self,
+                                                                    action:#selector(PhotoEditorViewController.rotationGesture) )
+        rotationGestureRecognizer.delegate = self
+        view.addGestureRecognizer(rotationGestureRecognizer)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(PhotoEditorViewController.tapGesture))
         

@@ -95,6 +95,11 @@
                                     <color key="textColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.98999999999999999" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <textInputTraits key="textInputTraits"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
+                                            <color key="value" red="0.46666666666666667" green="0.46666666666666667" blue="0.4823529411764706" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="onSearchChanged:" destination="-1" eventType="editingChanged" id="GNe-0g-lM4"/>
                                     </connections>

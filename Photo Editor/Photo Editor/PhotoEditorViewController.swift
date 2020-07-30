@@ -42,6 +42,10 @@ public final class PhotoEditorViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var font1Button: UIButton!
+    @IBOutlet weak var font2Button: UIButton!
+    @IBOutlet weak var font3Button: UIButton!
+    @IBOutlet weak var font4Button: UIButton!
     
     @objc public var image: UIImage?
     /**
@@ -81,7 +85,7 @@ public final class PhotoEditorViewController: UIViewController {
     var activeTextView: UITextView?
     var imageViewToPan: UIImageView?
     var isTyping: Bool = false
-    
+    var gifsImages: [UIImageView] = []
     
     var gifsStickersViewController: GifsStickersViewController!
     var backgroundViewController: BackgroundViewController!
@@ -111,27 +115,30 @@ public final class PhotoEditorViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow),
                                                name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+        name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide),
+                                               name: UIResponder.keyboardDidHideNotification, object: nil)
         NotificationCenter.default.addObserver(self,selector: #selector(keyboardWillChangeFrame(_:)),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
-        
+
         configureCollectionView()
         gifsStickersViewController = GifsStickersViewController(nibName: "GifsStickersViewController", bundle: Bundle(for: GifsStickersViewController.self))
         
         backgroundViewController = BackgroundViewController(nibName: "BackgroundViewController", bundle: Bundle(for: BackgroundViewController.self))
         hideControls()
+        openTextTool()
     }
     
     @IBAction func slider(_ sender: Any) {
         if let textView = activeTextView {
-            textView.font = UIFont(name: "Helvetica", size: CGFloat(Int(textSizeSlider.value)))
-            
-            lastTextViewFont = UIFont(name: "Helvetica", size: CGFloat(Int(textSizeSlider.value)))
+            lastTextViewFont = lastTextViewFont?.withSize(CGFloat(Int(textSizeSlider.value)))
+            textView.font = lastTextViewFont
             let sizeToFit = textView.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width, height:CGFloat.greatestFiniteMagnitude))
             
-            textView.bounds.size = CGSize(width: sizeToFit.width,
+            textView.bounds.size = CGSize(width: UIScreen.main.bounds.size.width,
                                           height: sizeToFit.height)
             textView.setNeedsDisplay()
         }
@@ -186,9 +193,7 @@ public final class PhotoEditorViewController: UIViewController {
     
     func hideToolbar(hide: Bool) {
         topToolbar.isHidden = hide
-        topGradient.isHidden = hide
         bottomToolbar.isHidden = hide
-        bottomGradient.isHidden = hide
         continueButton.isHidden = isTyping ? true : hide
     }
 }

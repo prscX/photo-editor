@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "117"
             endingLineNumber = "117"
-            landmarkName = "continueButtonPressed(_:)"
+            landmarkName = "onStylePressed(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

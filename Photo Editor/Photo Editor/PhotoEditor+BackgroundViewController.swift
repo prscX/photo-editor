@@ -13,8 +13,6 @@ extension PhotoEditorViewController {
     
     func addBackgroundViewController() {
         backgroundVCIsVisible = true
-        
-        self.canvasImageView.isUserInteractionEnabled = false
         backgroundViewController.backgroundViewControllerDelegate = self
         
         for color in self.bgColors {
