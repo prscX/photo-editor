@@ -134,7 +134,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="28"/>
                                                                     <state key="normal" image="icon_bg.png"/>
                                                                     <connections>
-                                                                        <action selector="backgroundButtonTapper:" destination="-1" eventType="touchUpInside" id="g4o-by-Z0u"/>
+                                                                        <action selector="backgroundButtonPressed:" destination="-1" eventType="touchUpInside" id="Qgd-kj-1TT"/>
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Background" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6w-fH-saO">
@@ -238,7 +238,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9an-1W-thw">
-                    <rect key="frame" x="12" y="44" width="30" height="42"/>
+                    <rect key="frame" x="12" y="44" width="30" height="37"/>
                     <fontDescription key="fontDescription" name="icomoon" family="icomoon" pointSize="25"/>
                     <size key="titleShadowOffset" width="1" height="0.0"/>
                     <state key="normal" title="">
@@ -250,7 +250,7 @@
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KxU-y4-Jwh">
-                    <rect key="frame" x="357" y="44" width="45" height="42"/>
+                    <rect key="frame" x="357" y="44" width="45" height="37"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                     <size key="titleShadowOffset" width="1" height="0.0"/>
                     <state key="normal" title="Done">
@@ -262,7 +262,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HcY-sV-ehZ">
-                    <rect key="frame" x="354" y="44" width="48" height="42"/>
+                    <rect key="frame" x="354" y="44" width="48" height="37"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                     <state key="normal" title="POST">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

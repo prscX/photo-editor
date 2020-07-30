@@ -109,7 +109,8 @@ extension PhotoEditorViewController {
         exportExpression()
     }
     
-    @IBAction func backgroundButtonTapper(_ sender: Any) {
+
+    @IBAction func backgroundButtonPressed(_ sender: Any) {
         addBackgroundViewController()
     }
     

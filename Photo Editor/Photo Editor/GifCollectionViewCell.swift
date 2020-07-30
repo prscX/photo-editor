@@ -9,7 +9,7 @@ import UIKit
 
 class GifCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var gifImageView: UIImageView!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.backgroundColor = .white
