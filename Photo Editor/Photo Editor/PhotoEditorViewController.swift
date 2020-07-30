@@ -10,6 +10,8 @@ import UIKit
 
 public final class PhotoEditorViewController: UIViewController {
     
+    //To hold background image
+    @IBOutlet weak var imageBg: UIImageView!
     /** holding the 2 imageViews original image and drawing & stickers */
     @IBOutlet weak var canvasView: UIView!
     //To hold the image
@@ -29,6 +31,8 @@ public final class PhotoEditorViewController: UIViewController {
     @IBOutlet weak var colorsCollectionView: UICollectionView!
     @IBOutlet weak var colorPickerView: UIView!
     @IBOutlet weak var colorPickerViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textSizeSlider: UISlider!
+    @IBOutlet weak var continueButton: UIButton!
     
     //Controls
     @IBOutlet weak var cropButton: UIButton!
@@ -80,7 +84,10 @@ public final class PhotoEditorViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.setImageView(image: image!)
+        
+        if let bgImage = image {
+            self.setBackgroundImage(image: bgImage)
+        }
         
         deleteView.layer.cornerRadius = deleteView.bounds.height / 2
         deleteView.layer.borderWidth = 2.0
@@ -103,6 +110,19 @@ public final class PhotoEditorViewController: UIViewController {
         configureCollectionView()
         stickersViewController = StickersViewController(nibName: "StickersViewController", bundle: Bundle(for: StickersViewController.self))
         hideControls()
+    }
+    
+    @IBAction func slider(_ sender: Any) {
+        if let textView = activeTextView {
+            textView.font = UIFont(name: "Helvetica", size: CGFloat(Int(textSizeSlider.value)))
+            
+            lastTextViewFont = UIFont(name: "Helvetica", size: CGFloat(Int(textSizeSlider.value)))
+            let sizeToFit = textView.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width, height:CGFloat.greatestFiniteMagnitude))
+            
+            textView.bounds.size = CGSize(width: sizeToFit.width,
+            height: sizeToFit.height)
+            textView.setNeedsDisplay()
+        }
     }
     
     func configureCollectionView() {
@@ -131,11 +151,16 @@ public final class PhotoEditorViewController: UIViewController {
         imageViewHeightConstraint.constant = (size?.height)!
     }
     
+    func setBackgroundImage(image: UIImage) {
+        imageBg.image = image
+    }
+    
     func hideToolbar(hide: Bool) {
         topToolbar.isHidden = hide
         topGradient.isHidden = hide
         bottomToolbar.isHidden = hide
         bottomGradient.isHidden = hide
+        continueButton.isHidden = isTyping ? true : hide
     }
 }
 

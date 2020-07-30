@@ -113,6 +113,10 @@ extension PhotoEditorViewController {
         photoEditorDelegate?.doneEditing(image: image)
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func backgroundButtonPressed(_ sender: Any) {
+        // TODO: open background modal
+    }
 
     //MAKR: helper methods
     
@@ -123,7 +127,7 @@ extension PhotoEditorViewController {
     }
     
     func hideControls() {
-        var controls = hiddenControls
+        let controls = hiddenControls
         
         for control in controls {
             if (control == "clear") {
