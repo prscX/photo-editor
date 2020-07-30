@@ -68,7 +68,7 @@ public final class PhotoEditorViewController: UIViewController {
     @objc public var hiddenControls : [NSString] = []
     
     var backgroundVCIsVisible = false
-    var stickersVCIsVisible = false
+    var gifsStickersVCIsVisible = false
     var drawColor: UIColor = UIColor.black
     var textColor: UIColor = UIColor.white
     var isDrawing: Bool = false
@@ -83,7 +83,7 @@ public final class PhotoEditorViewController: UIViewController {
     var isTyping: Bool = false
     
     
-    var stickersViewController: StickersViewController!
+    var gifsStickersViewController: GifsStickersViewController!
     var backgroundViewController: BackgroundViewController!
     
     //Register Custom font before we load XIB
@@ -118,7 +118,7 @@ public final class PhotoEditorViewController: UIViewController {
         
         
         configureCollectionView()
-        stickersViewController = StickersViewController(nibName: "StickersViewController", bundle: Bundle(for: StickersViewController.self))
+        gifsStickersViewController = GifsStickersViewController(nibName: "GifsStickersViewController", bundle: Bundle(for: GifsStickersViewController.self))
         
         backgroundViewController = BackgroundViewController(nibName: "BackgroundViewController", bundle: Bundle(for: BackgroundViewController.self))
         hideControls()

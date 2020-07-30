@@ -1,30 +1,36 @@
 //
-//  BackgroundViewController.swift
-//  iOSPhotoEditor
+//  StickersViewController.swift
+//  Photo Editor
 //
-//  Created by Adam Podsiadlo on 17/07/2020.
-//
+//  Created by Mohamed Hamed on 4/23/17.
+//  Copyright © 2017 Mohamed Hamed. All rights reserved.
+//  Credit https://github.com/AhmedElassuty/IOS-BottomSheet
 
 import UIKit
+import CollectionViewWaterfallLayout
 
-class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
+class GifsStickersViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var holdView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var segmentedView: UISegmentedControl!
+    @IBOutlet weak var searchTextField: UITextField!
     
-    var collectionView: UICollectionView!
-    var imagesCollectionView: UICollectionView!
+    var stickersCollectionView: UICollectionView!
+    var gifsCollectionView: UICollectionView!
     
-    var imageDelegate: ImageCollectionViewDelegate!
+    var gifsDelegate: GifsCollectionViewDelegate!
+    var stickersDelegate: GifsCollectionViewDelegate!
     
-    var bgImages : [String] = []
-    var bgColors : [String] = []
-    var backgroundViewControllerDelegate : BackgroundViewControllerDelegate?
+    var gifs: [GiphyObject] = []
+    var stickers: [GiphyObject] = []
+    var gifsStickersViewControllerDelegate : GifsStickersViewControllerDelegate?
+    
+    var gifsApiManager: GiphyApiManager!
+    var stickersApiManager: GiphyApiManager!
     
     let screenSize = UIScreen.main.bounds.size
     
     let fullView: CGFloat = 100 // remainder of screen height
-    
     var bottomPadding: CGFloat {
         var topPadding:CGFloat? = 0
         if #available(iOS 11.0, *) {
@@ -38,17 +44,21 @@ class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedAround()
+        initGiphy()
+        initSearchField()
         configureCollectionViews()
-        scrollView.showsHorizontalScrollIndicator = false
         
-        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
-        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
+        scrollView.contentSize = CGSize(width: 2.0 * screenSize.width,
+                                        height: scrollView.frame.size.height)
         
         scrollView.isPagingEnabled = true
         scrollView.delegate = self
         
-        segmentedView.setTitle("IMAGES", forSegmentAt: 0)
-        segmentedView.setTitle("COLORS", forSegmentAt: 1)
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
+        segmentedView.setTitle("STICKERS", forSegmentAt: 0)
+        segmentedView.setTitle("GIFS", forSegmentAt: 1)
         
         self.view.layer.cornerRadius = 20
         self.view.clipsToBounds = true
@@ -67,10 +77,27 @@ class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         
         holdView.layer.cornerRadius = 3
-        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(BackgroundViewController.panGesture))
+        let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(GifsStickersViewController.panGesture))
         gesture.delegate = self
         view.addGestureRecognizer(gesture)
-        
+    }
+    
+    @IBAction func onSearchChanged(_ sender: UITextField) {
+        if let searchText = sender.text {
+            if !searchText.isEmpty {
+                if (segmentedView.selectedSegmentIndex == 0) {
+                    stickersApiManager.searchGif(phrase: searchText)
+                } else {
+                    gifsApiManager.searchGif(phrase: searchText)
+                }
+            } else {
+                if (segmentedView.selectedSegmentIndex == 0) {
+                    stickersApiManager.fetchTrendingPage()
+                } else {
+                    gifsApiManager.fetchTrendingPage()
+                }
+            }
+        }
     }
     
     @IBAction func segmentedControlButtonClickAction(_ sender: UISegmentedControl) {
@@ -80,76 +107,97 @@ class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
                     self.scrollView.contentOffset = CGPoint(x: 0, y:0);
                 }, completion: nil)
             }
-            
-        }
-        else {
+        } else {
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 0.2, delay: 0, options: UIView.AnimationOptions.curveLinear, animations: {
                     self.scrollView.contentOffset = CGPoint(x:self.scrollView.frame.size.width, y:0);
                 }, completion: nil)
             }
-            
         }
+        
+        onPageChange()
+    }
+    
+    func initSearchField () {
+        searchTextField.layer.cornerRadius = 10
+        searchTextField.clipsToBounds = true
+        searchTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: searchTextField.frame.height))
+        searchTextField.leftViewMode = .always
+        searchTextField.returnKeyType = UIReturnKeyType.search
+    }
+    
+    func initGiphy () {
+        gifsApiManager = GiphyApiManager(apiType: GiphyType.gifs);
+        gifsApiManager.giphyApiManagerDelegate = self
+        gifsApiManager.fetchTrendingPage()
+        
+        stickersApiManager = GiphyApiManager(apiType: GiphyType.stickers);
+        stickersApiManager.giphyApiManagerDelegate = self
+        stickersApiManager.fetchTrendingPage()
+    }
+    
+    func onPageChange () {
+        searchTextField.text = ""
+        searchTextField.endEditing(true)
     }
     
     func configureCollectionViews() {
-        let frame = CGRect(x: scrollView.frame.size.width,
+        let frame = CGRect(x: 0,
                            y: 0,
                            width: UIScreen.main.bounds.width,
-                           height: view.frame.height - 40)
+                           height: scrollView.frame.height)
+        
+        let stickerslayout: CollectionViewWaterfallLayout = CollectionViewWaterfallLayout()
+        stickerslayout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
         
         
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
-        let width = (CGFloat) ((screenSize.width - 36) / 4.0)
-        layout.itemSize = CGSize(width: width, height: width)
+        stickersCollectionView = UICollectionView(frame: frame, collectionViewLayout: stickerslayout)
+        stickersCollectionView.backgroundColor = .clear
+        scrollView.addSubview(stickersCollectionView)
         
-        collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        collectionView.register(
-            UINib(nibName: "StickerCollectionViewCell", bundle: Bundle(for: StickerCollectionViewCell.self)),
-            forCellWithReuseIdentifier: "StickerCollectionViewCell")
+        stickersDelegate = GifsCollectionViewDelegate()
+        stickersDelegate.gifsStickersViewControllerDelegate = gifsStickersViewControllerDelegate
+        stickersCollectionView.delegate = stickersDelegate
+        stickersCollectionView.dataSource = stickersDelegate
+        stickersCollectionView.register(
+            UINib(nibName: "GifCollectionViewCell", bundle: Bundle(for: GifCollectionViewCell.self)),
+            forCellWithReuseIdentifier: "GifCollectionViewCell")
+        stickersCollectionView.keyboardDismissMode =  UIScrollView.KeyboardDismissMode.onDrag
         
         //-----------------------------------
+        let frameGifs = CGRect(x: scrollView.frame.size.width,
+                               y: 0,
+                               width: UIScreen.main.bounds.width,
+                               height: scrollView.frame.height)
         
-        let imagesFrame = CGRect(x: 0,
-                                 y: 0,
-                                 width: UIScreen.main.bounds.width,
-                                 height: view.frame.height - 40)
+        let gifslayout: CollectionViewWaterfallLayout = CollectionViewWaterfallLayout()
+        gifslayout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
         
-        let imageslayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        imageslayout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: bottomPadding, right: 12)
+        gifsCollectionView = UICollectionView(frame: frameGifs, collectionViewLayout: gifslayout)
+        gifsCollectionView.backgroundColor = .clear
+        scrollView.addSubview(gifsCollectionView)
         
-        let imageWidth = (CGFloat) ((screenSize.width - 36) / 2)
-        imageslayout.itemSize = CGSize(width: imageWidth, height: imageWidth * 1.3)
-        
-        imagesCollectionView = UICollectionView(frame: imagesFrame, collectionViewLayout: imageslayout)
-        imagesCollectionView.backgroundColor = .clear
-        scrollView.addSubview(imagesCollectionView)
-        scrollView.addSubview(collectionView)
-        imageDelegate = ImageCollectionViewDelegate()
-        
-        imageDelegate.bgImages = bgImages
-        
-        
-        imageDelegate.backgroundViewControllerDelegate = backgroundViewControllerDelegate
-        
-        imagesCollectionView.delegate = imageDelegate
-        imagesCollectionView.dataSource = imageDelegate
-        
-        imagesCollectionView.register(
-            UINib(nibName: "ImageCollectionViewCell", bundle: Bundle(for: ImageCollectionViewCell.self)),
-            forCellWithReuseIdentifier: "ImageCollectionViewCell")
-        
+        gifsDelegate = GifsCollectionViewDelegate()
+        gifsDelegate.gifsStickersViewControllerDelegate = gifsStickersViewControllerDelegate
+        gifsCollectionView.delegate = gifsDelegate
+        gifsCollectionView.dataSource = gifsDelegate
+        gifsCollectionView.register(
+            UINib(nibName: "GifCollectionViewCell", bundle: Bundle(for: GifCollectionViewCell.self)),
+            forCellWithReuseIdentifier: "GifCollectionViewCell")
+        gifsCollectionView.keyboardDismissMode =  UIScrollView.KeyboardDismissMode.onDrag
     }
+    
+    func loadMoreData() {
+        if (segmentedView.selectedSegmentIndex == 0) {
+            stickersApiManager.loadMore()
+        } else {
+            gifsApiManager.loadMore()
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //        prepareBackgroundView()
+        prepareBackgroundView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -168,18 +216,18 @@ class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionView.frame = CGRect(x: scrollView.frame.size.width,
-                                     y: 0,
-                                     width: UIScreen.main.bounds.width,
-                                     height: view.frame.height - 100)
+        stickersCollectionView.frame = CGRect(x: 0,
+                                              y: 0,
+                                              width: UIScreen.main.bounds.width,
+                                              height: scrollView.frame.height)
         
-        imagesCollectionView.frame = CGRect(x: 0,
-                                           y: 0,
-                                           width: UIScreen.main.bounds.width,
-                                           height: view.frame.height - 100)
+        gifsCollectionView.frame = CGRect(x: scrollView.frame.size.width,
+                                          y: 0,
+                                          width: UIScreen.main.bounds.width,
+                                          height: scrollView.frame.height)
         
         scrollView.contentSize = CGSize(width: 2.0 * screenSize.width,
-                                        height: scrollView.frame.size.height - 100)
+                                        height: scrollView.frame.size.height)
     }
     
     override func didReceiveMemoryWarning() {
@@ -239,7 +287,7 @@ class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
         }, completion: { (finished) -> Void in
             self.view.removeFromSuperview()
             self.removeFromParent()
-            self.backgroundViewControllerDelegate?.backgroundViewDidDisappear()
+            self.gifsStickersViewControllerDelegate?.stickersViewDidDisappear()
         })
     }
     
@@ -254,47 +302,15 @@ class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 }
 
-extension BackgroundViewController: UIScrollViewDelegate {
+extension GifsStickersViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ sender: UIScrollView) {
         if (sender.tag == 1) {
             let pageWidth = scrollView.bounds.width
             let pageFraction = scrollView.contentOffset.x / pageWidth
             segmentedView.selectedSegmentIndex = Int(round(pageFraction))
+            
+            onPageChange()
         }
     }
 }
-
-// MARK: - UICollectionViewDataSource
-extension BackgroundViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return bgColors.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        backgroundViewControllerDelegate?.didSelectColorBackground(color: bgColors[indexPath.item])
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let identifier = "StickerCollectionViewCell"
-        let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! StickerCollectionViewCell
-        cell.stickerImage.backgroundColor = UIColor(hexString: bgColors[indexPath.item])
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 4
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-}
-
-

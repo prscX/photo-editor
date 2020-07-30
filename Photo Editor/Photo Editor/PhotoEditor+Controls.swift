@@ -42,7 +42,7 @@ extension PhotoEditorViewController {
     }
     
     @IBAction func stickersButtonTapped(_ sender: Any) {
-        addStickersViewController()
+        addGifsStickersViewController()
     }
     
     @IBAction func drawButtonTapped(_ sender: Any) {

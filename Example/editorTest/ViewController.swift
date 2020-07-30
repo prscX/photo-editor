@@ -10,9 +10,6 @@ import UIKit
 import iOSPhotoEditor
 
 class ViewController: UIViewController {
-    
-    @IBOutlet weak var imageView: UIImageView!
-    
     let bgColors: [String] = ["#4282F7","#538EF7","#669AF8","#739FEE","#8CB3F9","#9EC0FA","#B2CDFB","#C4D8FB","#D9E6FD","#ECF2FE","#DCC7C6","#DFCCCB","#E3D2D1","#E6D8D6","#EADEDC","#EDE2E2","#F1E8E8","#F4EDED","#FBF9F9","#EED5BB","#EFD9C2","#F2DEC9","#F2E0CF","#F4E5D6","#4282F7","#538EF7","#669AF8","#739FEE","#8CB3F9","#9EC0FA","#B2CDFB","#C4D8FB","#D9E6FD","#ECF2FE","#DCC7C6"]
     
     let bgImages: [String] = ["https://images-na.ssl-images-amazon.com/images/I/71FcdrSeKlL._AC_SL1001_.jpg","https://i.pinimg.com/originals/bf/f5/d0/bff5d074d399bdfec6071e9168398406.jpg","https://i1.wp.com/katzenworld.co.uk/wp-content/uploads/2019/06/funny-cat.jpeg?fit=1920%2C1920&ssl=1","https://www.zooroyal.de/magazin/wp-content/uploads/2017/02/deutsche-dogge-hunderassen-760x560.jpg"]
@@ -43,16 +40,12 @@ class ViewController: UIViewController {
         
         showPhotoEditor()
     }
-    
-    @IBAction func pickImageButtonTapped(_ sender: Any) {
-        showPhotoEditor()
-    }
 }
 
 extension ViewController: PhotoEditorDelegate {
     
     func doneEditing(image: UIImage) {
-        imageView.image = image
+        
     }
     
     func canceledEditing() {

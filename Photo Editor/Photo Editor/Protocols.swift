@@ -31,17 +31,21 @@ import UIKit
  - didSelectImage
  - stickersViewDidDisappear
  */
-protocol StickersViewControllerDelegate {
+protocol GifsStickersViewControllerDelegate {
     /**
-     - Parameter view: selected view from StickersViewController
+     - Parameter view: selected sticker from GifsStickersViewController
      */
-    func didSelectView(view: UIView)
+    func didSelectSticker(image: UIImage)
     /**
-     - Parameter image: selected Image from StickersViewController
+     - Parameter image: selected Gif from GifsStickersViewController
      */
-    func didSelectImage(image: UIImage)
+    func didSelectGif(gif: String, width: Int, height: Int)
     /**
-     StickersViewController did Disappear
+     GifsStickersViewController on load more data
+    */
+    func onLoadMore()
+    /**
+     GifsStickersViewController did Disappear
      */
     func stickersViewDidDisappear()
 }
@@ -72,4 +76,9 @@ protocol BackgroundViewControllerDelegate {
  */
 protocol ColorDelegate {
     func didSelectColor(color: UIColor)
+}
+
+protocol GiphyApiManagerDelegate {
+    func onLoadData(data: [GiphyObject], type: GiphyType)
+    func onLoadMoreData(data: [GiphyObject], type: GiphyType)
 }
