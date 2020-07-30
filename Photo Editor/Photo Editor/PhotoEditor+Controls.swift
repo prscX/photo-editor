@@ -107,7 +107,8 @@ extension PhotoEditorViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func backgroundButtonTapper(_ sender: Any) {
+
+    @IBAction func backgroundButtonPressed(_ sender: Any) {
         addBackgroundViewController()
     }
     

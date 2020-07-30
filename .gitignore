@@ -1,0 +1,25 @@
+# OSX
+#
+.DS_Store
+
+# Xcode
+#
+/Example/build/
+/Example/*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+/Example/*.perspectivev3
+!default.perspectivev3
+/Example/xcuserdata
+/Example/*.xccheckout
+/Example/*.moved-aside
+/Example/DerivedData
+*.hmap
+*.ipa
+/Example/*.xcuserstate
+ 
+# CocoaPods
+/Example/Pods/
