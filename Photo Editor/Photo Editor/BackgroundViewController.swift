@@ -12,8 +12,8 @@ class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var segmentedView: UISegmentedControl!
     
-    var collectioView: UICollectionView!
-    var imagesCollectioView: UICollectionView!
+    var collectionView: UICollectionView!
+    var imagesCollectionView: UICollectionView!
     
     var imageDelegate: ImageCollectionViewDelegate!
     
@@ -104,14 +104,14 @@ class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
         let width = (CGFloat) ((screenSize.width - 36) / 4.0)
         layout.itemSize = CGSize(width: width, height: width)
         
-        collectioView = UICollectionView(frame: frame, collectionViewLayout: layout)
-        collectioView.backgroundColor = .clear
+        collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
         
         
-        collectioView.delegate = self
-        collectioView.dataSource = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
-        collectioView.register(
+        collectionView.register(
             UINib(nibName: "StickerCollectionViewCell", bundle: Bundle(for: StickerCollectionViewCell.self)),
             forCellWithReuseIdentifier: "StickerCollectionViewCell")
         
@@ -128,10 +128,10 @@ class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
         let imageWidth = (CGFloat) ((screenSize.width - 36) / 2)
         imageslayout.itemSize = CGSize(width: imageWidth, height: imageWidth * 1.3)
         
-        imagesCollectioView = UICollectionView(frame: imagesFrame, collectionViewLayout: imageslayout)
-        imagesCollectioView.backgroundColor = .clear
-        scrollView.addSubview(imagesCollectioView)
-        scrollView.addSubview(collectioView)
+        imagesCollectionView = UICollectionView(frame: imagesFrame, collectionViewLayout: imageslayout)
+        imagesCollectionView.backgroundColor = .clear
+        scrollView.addSubview(imagesCollectionView)
+        scrollView.addSubview(collectionView)
         imageDelegate = ImageCollectionViewDelegate()
         
         imageDelegate.bgImages = bgImages
@@ -139,10 +139,10 @@ class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
         
         imageDelegate.backgroundViewControllerDelegate = backgroundViewControllerDelegate
         
-        imagesCollectioView.delegate = imageDelegate
-        imagesCollectioView.dataSource = imageDelegate
+        imagesCollectionView.delegate = imageDelegate
+        imagesCollectionView.dataSource = imageDelegate
         
-        imagesCollectioView.register(
+        imagesCollectionView.register(
             UINib(nibName: "ImageCollectionViewCell", bundle: Bundle(for: ImageCollectionViewCell.self)),
             forCellWithReuseIdentifier: "ImageCollectionViewCell")
         
@@ -168,12 +168,12 @@ class BackgroundViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectioView.frame = CGRect(x: scrollView.frame.size.width,
+        collectionView.frame = CGRect(x: scrollView.frame.size.width,
                                      y: 0,
                                      width: UIScreen.main.bounds.width,
                                      height: view.frame.height - 100)
         
-        imagesCollectioView.frame = CGRect(x: 0,
+        imagesCollectionView.frame = CGRect(x: 0,
                                            y: 0,
                                            width: UIScreen.main.bounds.width,
                                            height: view.frame.height - 100)
