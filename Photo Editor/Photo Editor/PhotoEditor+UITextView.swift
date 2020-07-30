@@ -41,7 +41,8 @@ extension PhotoEditorViewController: UITextViewDelegate {
             else {
                 return
         }
-        activeTextView = nil
+        // For V1 multiple texts are disabled - uncomment to handle multiple textView
+        //activeTextView = nil
         textView.font = self.lastTextViewFont!
         UIView.animate(withDuration: 0.3,
                        animations: {

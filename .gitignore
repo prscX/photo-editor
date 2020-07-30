@@ -4,22 +4,22 @@
 
 # Xcode
 #
-build/
-*.pbxuser
+/Example/build/
+/Example/*.pbxuser
 !default.pbxuser
 *.mode1v3
 !default.mode1v3
 *.mode2v3
 !default.mode2v3
-*.perspectivev3
+/Example/*.perspectivev3
 !default.perspectivev3
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
+/Example/xcuserdata
+/Example/*.xccheckout
+/Example/*.moved-aside
+/Example/DerivedData
 *.hmap
 *.ipa
-*.xcuserstate
+/Example/*.xcuserstate
  
 # CocoaPods
 /Example/Pods/

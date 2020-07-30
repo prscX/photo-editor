@@ -13,6 +13,10 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     
+    let bgColors: [String] = ["#4282F7","#538EF7","#669AF8","#739FEE","#8CB3F9","#9EC0FA","#B2CDFB","#C4D8FB","#D9E6FD","#ECF2FE","#DCC7C6","#DFCCCB","#E3D2D1","#E6D8D6","#EADEDC","#EDE2E2","#F1E8E8","#F4EDED","#FBF9F9","#EED5BB","#EFD9C2","#F2DEC9","#F2E0CF","#F4E5D6","#4282F7","#538EF7","#669AF8","#739FEE","#8CB3F9","#9EC0FA","#B2CDFB","#C4D8FB","#D9E6FD","#ECF2FE","#DCC7C6"]
+    
+    let bgImages: [String] = ["https://images-na.ssl-images-amazon.com/images/I/71FcdrSeKlL._AC_SL1001_.jpg","https://i.pinimg.com/originals/bf/f5/d0/bff5d074d399bdfec6071e9168398406.jpg","https://i1.wp.com/katzenworld.co.uk/wp-content/uploads/2019/06/funny-cat.jpeg?fit=1920%2C1920&ssl=1","https://www.zooroyal.de/magazin/wp-content/uploads/2017/02/deutsche-dogge-hunderassen-760x560.jpg"]
+    
     func showPhotoEditor () {
         let photoEditor = PhotoEditorViewController(nibName:"PhotoEditorViewController",bundle: Bundle(for: PhotoEditorViewController.self))
         photoEditor.photoEditorDelegate = self
@@ -26,6 +30,9 @@ class ViewController: UIViewController {
             photoEditor.stickers.append(UIImage(named: i.description )!)
         }
         
+        photoEditor.bgColors = bgColors
+        photoEditor.bgImages = bgImages
+        
         photoEditor.modalPresentationStyle = UIModalPresentationStyle.fullScreen;
         
         present(photoEditor, animated: true, completion: nil)
@@ -38,10 +45,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func pickImageButtonTapped(_ sender: Any) {
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.sourceType = .photoLibrary
-        present(picker, animated: true, completion: nil)
+        showPhotoEditor()
     }
 }
 
@@ -53,39 +57,5 @@ extension ViewController: PhotoEditorDelegate {
     
     func canceledEditing() {
         print("Canceled")
-    }
-}
-
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    private func imagePickerController(_ picker: UIImagePickerController,
-                                       didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        guard let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage else {
-            picker.dismiss(animated: true, completion: nil)
-            return
-        }
-        picker.dismiss(animated: true, completion: nil)
-        
-        
-        let photoEditor = PhotoEditorViewController(nibName:"PhotoEditorViewController",bundle: Bundle(for: PhotoEditorViewController.self))
-        photoEditor.photoEditorDelegate = self
-        photoEditor.image = image
-        //Colors for drawing and Text, If not set default values will be used
-        //photoEditor.colors = [.red, .blue, .green]
-        
-        //Stickers that the user will choose from to add on the image
-        for i in 0...10 {
-            photoEditor.stickers.append(UIImage(named: i.description )!)
-        }
-        
-        //To hide controls - array of enum control
-        //photoEditor.hiddenControls = [.crop, .draw, .share]
-        
-        present(photoEditor, animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
     }
 }
