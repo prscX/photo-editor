@@ -10,10 +10,6 @@ import SwiftyGif
 import CollectionViewWaterfallLayout
 
 class GifsCollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, CollectionViewWaterfallLayoutDelegate {
-<<<<<<< HEAD
- 
-=======
->>>>>>> master
     var gifsStickersViewControllerDelegate : GifsStickersViewControllerDelegate?
     
     let gifManager = SwiftyGifManager(memoryLimit:200)
