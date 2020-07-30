@@ -10,7 +10,10 @@ import SwiftyGif
 import CollectionViewWaterfallLayout
 
 class GifsCollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, CollectionViewWaterfallLayoutDelegate {
+<<<<<<< HEAD
  
+=======
+>>>>>>> master
     var gifsStickersViewControllerDelegate : GifsStickersViewControllerDelegate?
     
     let gifManager = SwiftyGifManager(memoryLimit:200)
@@ -65,10 +68,10 @@ class GifsCollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-          let aspectRatio = CGFloat(Double(data[indexPath.item].height!)! / Double(data[indexPath.item].width!)!)
-                
-                return CGSize(width: width, height: width * aspectRatio)
-     }
+        let aspectRatio = CGFloat(Double(data[indexPath.item].height!)! / Double(data[indexPath.item].width!)!)
+        
+        return CGSize(width: width, height: width * aspectRatio)
+    }
     
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
         let aspectRatio = CGFloat(Double(data[indexPath.item].height!)! / Double(data[indexPath.item].width!)!)
