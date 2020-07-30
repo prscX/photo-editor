@@ -140,7 +140,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="28"/>
                                                     <state key="normal" image="icon_bg.png"/>
                                                     <connections>
-                                                        <action selector="backgroundButtonTapper:" destination="-1" eventType="touchUpInside" id="g4o-by-Z0u"/>
+                                                        <action selector="backgroundButtonPressed:" destination="-1" eventType="touchUpInside" id="rJo-2z-mFW"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Background" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6w-fH-saO">
