@@ -27,7 +27,6 @@
 		056513341EF489C0009EA38F /* StickersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0565132A1EF489C0009EA38F /* StickersViewController.xib */; };
 		056513351EF489C0009EA38F /* ColorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0565132B1EF489C0009EA38F /* ColorCollectionViewCell.xib */; };
 		056513361EF489C0009EA38F /* EmojiCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0565132C1EF489C0009EA38F /* EmojiCollectionViewCell.xib */; };
-		056513371EF489C0009EA38F /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0565132D1EF489C0009EA38F /* icomoon.ttf */; };
 		056513381EF489C0009EA38F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0565132E1EF489C0009EA38F /* LaunchScreen.storyboard */; };
 		056513391EF489C0009EA38F /* PhotoCropEditorBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = 0565132F1EF489C0009EA38F /* PhotoCropEditorBorder.png */; };
 		0565133A1EF489C0009EA38F /* PhotoCropEditorBorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 056513301EF489C0009EA38F /* PhotoCropEditorBorder@2x.png */; };
@@ -45,6 +44,7 @@
 		059EA71D1EACB8790072C0FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059EA71C1EACB8790072C0FE /* AppDelegate.swift */; };
 		059EA7241EACB8790072C0FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 059EA7231EACB8790072C0FE /* Assets.xcassets */; };
 		059EA7271EACB8790072C0FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 059EA7251EACB8790072C0FE /* LaunchScreen.storyboard */; };
+		BD77154724782A8B00216043 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD77154624782A8B00216043 /* icomoon.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,7 +68,6 @@
 		0565132A1EF489C0009EA38F /* StickersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StickersViewController.xib; sourceTree = "<group>"; };
 		0565132B1EF489C0009EA38F /* ColorCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ColorCollectionViewCell.xib; sourceTree = "<group>"; };
 		0565132C1EF489C0009EA38F /* EmojiCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmojiCollectionViewCell.xib; sourceTree = "<group>"; };
-		0565132D1EF489C0009EA38F /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		0565132E1EF489C0009EA38F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0565132F1EF489C0009EA38F /* PhotoCropEditorBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PhotoCropEditorBorder.png; sourceTree = "<group>"; };
 		056513301EF489C0009EA38F /* PhotoCropEditorBorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhotoCropEditorBorder@2x.png"; sourceTree = "<group>"; };
@@ -88,6 +87,7 @@
 		059EA7231EACB8790072C0FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		059EA7261EACB8790072C0FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		059EA7281EACB8790072C0FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BD77154624782A8B00216043 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +120,7 @@
 		059EA71B1EACB8790072C0FE /* Photo Editor */ = {
 			isa = PBXGroup;
 			children = (
+				BD77154624782A8B00216043 /* icomoon.ttf */,
 				056513081EF489B4009EA38F /* PhotoEditorViewController.swift */,
 				056513091EF489B4009EA38F /* StickersViewController.swift */,
 				0565130A1EF489B4009EA38F /* ColorCollectionViewCell.swift */,
@@ -149,7 +150,6 @@
 				0565132A1EF489C0009EA38F /* StickersViewController.xib */,
 				0565132B1EF489C0009EA38F /* ColorCollectionViewCell.xib */,
 				0565132C1EF489C0009EA38F /* EmojiCollectionViewCell.xib */,
-				0565132D1EF489C0009EA38F /* icomoon.ttf */,
 				0565132E1EF489C0009EA38F /* LaunchScreen.storyboard */,
 				0565132F1EF489C0009EA38F /* PhotoCropEditorBorder.png */,
 				056513301EF489C0009EA38F /* PhotoCropEditorBorder@2x.png */,
@@ -190,7 +190,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Mohamed Hamed";
 				TargetAttributes = {
 					059EA7181EACB8790072C0FE = {
@@ -202,7 +202,7 @@
 			};
 			buildConfigurationList = 059EA7141EACB8780072C0FE /* Build configuration list for PBXProject "Photo Editor" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -226,11 +226,11 @@
 				059EA7271EACB8790072C0FE /* LaunchScreen.storyboard in Resources */,
 				0565133B1EF489C0009EA38F /* PhotoCropEditorBorder@3x.png in Resources */,
 				0565133D1EF489C0009EA38F /* PhotoEditorViewController.xib in Resources */,
+				BD77154724782A8B00216043 /* icomoon.ttf in Resources */,
 				059EA7241EACB8790072C0FE /* Assets.xcassets in Resources */,
 				056513351EF489C0009EA38F /* ColorCollectionViewCell.xib in Resources */,
 				0565133A1EF489C0009EA38F /* PhotoCropEditorBorder@2x.png in Resources */,
 				0565133C1EF489C0009EA38F /* StickerCollectionViewCell.xib in Resources */,
-				056513371EF489C0009EA38F /* icomoon.ttf in Resources */,
 				056513381EF489C0009EA38F /* LaunchScreen.storyboard in Resources */,
 				056513341EF489C0009EA38F /* StickersViewController.xib in Resources */,
 				056513361EF489C0009EA38F /* EmojiCollectionViewCell.xib in Resources */,
@@ -292,21 +292,30 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -335,6 +344,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -342,21 +352,30 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -377,6 +396,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -391,7 +411,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hamed.Photo-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -405,7 +425,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hamed.Photo-Editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

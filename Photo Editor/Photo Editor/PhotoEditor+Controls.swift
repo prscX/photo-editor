@@ -117,7 +117,7 @@ extension PhotoEditorViewController {
     //MAKR: helper methods
     
     @objc func image(_ image: UIImage, withPotentialError error: NSErrorPointer, contextInfo: UnsafeRawPointer) {
-        let alert = UIAlertController(title: "Image Saved", message: "Image successfully saved to Photos library", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: NSLocalizedString("Image Saved", comment: ""), message: NSLocalizedString("Image successfully saved to Photos library", comment: ""), preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
