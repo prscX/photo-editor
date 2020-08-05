@@ -10,69 +10,73 @@ import Foundation
 import UIKit
 
 extension PhotoEditorViewController {
-    
-    func addStickersViewController() {
-        stickersVCIsVisible = true
-        hideToolbar(hide: true)
-        self.canvasImageView.isUserInteractionEnabled = false
-        stickersViewController.stickersViewControllerDelegate = self
+    func addGifsStickersViewController() {
+        gifsStickersVCIsVisible = true
+        gifsStickersViewController.gifsStickersViewControllerDelegate = self
         
-        for image in self.stickers {
-            stickersViewController.stickers.append(image)
-        }
-        self.addChild(stickersViewController)
-        self.view.addSubview(stickersViewController.view)
-        stickersViewController.didMove(toParent: self)
+        self.addChild(gifsStickersViewController)
+        self.view.addSubview(gifsStickersViewController.view)
+        gifsStickersViewController.didMove(toParent: self)
         let height = view.frame.height
         let width  = view.frame.width
-        stickersViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY , width: width, height: height)
+        gifsStickersViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY , width: width, height: height)
     }
     
     func removeStickersView() {
-        stickersVCIsVisible = false
+        gifsStickersVCIsVisible = false
         self.canvasImageView.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.3,
                        delay: 0,
                        options: UIView.AnimationOptions.curveEaseIn,
                        animations: { () -> Void in
-                        var frame = self.stickersViewController.view.frame
+                        var frame = self.gifsStickersViewController.view.frame
                         frame.origin.y = UIScreen.main.bounds.maxY
-                        self.stickersViewController.view.frame = frame
+                        self.gifsStickersViewController.view.frame = frame
                         
         }, completion: { (finished) -> Void in
-            self.stickersViewController.view.removeFromSuperview()
-            self.stickersViewController.removeFromParent()
+            self.gifsStickersViewController.view.removeFromSuperview()
+            self.gifsStickersViewController.removeFromParent()
             self.hideToolbar(hide: false)
         })
     }    
 }
 
-extension PhotoEditorViewController: StickersViewControllerDelegate {
-    
-    func didSelectView(view: UIView) {
-        self.removeStickersView()
-        
-        view.center = canvasImageView.center
-        self.canvasImageView.addSubview(view)
-        //Gestures
-        addGestures(view: view)
+extension PhotoEditorViewController: GifsStickersViewControllerDelegate {
+    func onLoadMore() {
+        gifsStickersViewController!.loadMoreData()
     }
     
-    func didSelectImage(image: UIImage) {
+    func didSelectGif(gif: String, width: Int, height: Int) {
         self.removeStickersView()
         
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame.size = CGSize(width: 150, height: 150)
-        imageView.center = canvasImageView.center
+        var imageView: UIImageView? = nil
         
-        self.canvasImageView.addSubview(imageView)
-        //Gestures
-        addGestures(view: imageView)
+        if (!gifsImages.isEmpty &&  gifsImages.count > 4) {
+            imageView = gifsImages[gifsImages.count - 1]
+        } else {
+            imageView = UIImageView()
+        }
+        
+        let loader = UIActivityIndicatorView.init(style: .gray)
+        
+        if let image = imageView {
+            image.setGifFromURL(URL.init(string: gif)!, customLoader: loader)
+            image.contentMode = .scaleAspectFit
+            image.frame.size = CGSize(width: width, height: height)
+            image.center = canvasImageView.center
+            image.layer.cornerRadius = 10
+            image.clipsToBounds = true
+            
+            if (!gifsImages.contains(image)) {
+                self.canvasImageView.addSubview(image)
+                addGestures(view: image)
+                gifsImages.append(image)
+            }
+        }
     }
     
     func stickersViewDidDisappear() {
-        stickersVCIsVisible = false
+        gifsStickersVCIsVisible = false
         hideToolbar(hide: false)
     }
     
@@ -87,10 +91,12 @@ extension PhotoEditorViewController: StickersViewControllerDelegate {
         panGesture.delegate = self
         view.addGestureRecognizer(panGesture)
         
+        
         let pinchGesture = UIPinchGestureRecognizer(target: self,
                                                     action: #selector(PhotoEditorViewController.pinchGesture))
         pinchGesture.delegate = self
         view.addGestureRecognizer(pinchGesture)
+        
         
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self,
                                                                     action:#selector(PhotoEditorViewController.rotationGesture) )
@@ -98,7 +104,7 @@ extension PhotoEditorViewController: StickersViewControllerDelegate {
         view.addGestureRecognizer(rotationGestureRecognizer)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(PhotoEditorViewController.tapGesture))
-        view.addGestureRecognizer(tapGesture)
         
+        view.addGestureRecognizer(tapGesture)
     }
 }

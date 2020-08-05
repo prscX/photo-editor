@@ -21,12 +21,14 @@ extension PhotoEditorViewController: UITextViewDelegate {
     }
     public func textViewDidBeginEditing(_ textView: UITextView) {
         isTyping = true
+        continueButton.isHidden = true
+        doneButton.isHidden = false
+        
         lastTextViewTransform =  textView.transform
         lastTextViewTransCenter = textView.center
         lastTextViewFont = textView.font!
         activeTextView = textView
         textView.superview?.bringSubviewToFront(textView)
-        textView.font = UIFont(name: "Helvetica", size: 30)
         UIView.animate(withDuration: 0.3,
                        animations: {
                         textView.transform = CGAffineTransform.identity
@@ -41,7 +43,8 @@ extension PhotoEditorViewController: UITextViewDelegate {
             else {
                 return
         }
-        activeTextView = nil
+        // For V1 multiple texts are disabled - uncomment to handle multiple textView
+        //activeTextView = nil
         textView.font = self.lastTextViewFont!
         UIView.animate(withDuration: 0.3,
                        animations: {

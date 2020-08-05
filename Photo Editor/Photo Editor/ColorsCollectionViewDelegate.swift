@@ -34,7 +34,7 @@ class ColorsCollectionViewDelegate: NSObject, UICollectionViewDataSource, UIColl
         super.init()
     }
     
-    var stickersViewControllerDelegate : StickersViewControllerDelegate?
+    var gifsStickersViewControllerDelegate : GifsStickersViewControllerDelegate?
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return colors.count
